@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { Subscription } from 'rxjs';
+
+export class Order {
+  id: number;
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -7,9 +16,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  private subscriptions: Subscription[] = [];
+  orders: Order[] = [];
+  stompClient: any;
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.setWebSocketConntection();
+  }
+
+  setWebSocketConntection() {
+    const ws = new SockJS('http://localhost:8080/ws');
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    this.stompClient.connect({}, () => {
+      that.subscribeOrder();
+    });
+  }
+
+  subscribeOrder() {
+    const topic = `/topic/package`;
+    this.subscriptions.push(
+      this.stompClient.subscribe(topic, (order) => {
+        console.log('ORDER: ', order);
+      })
+    );
   }
 
 }
