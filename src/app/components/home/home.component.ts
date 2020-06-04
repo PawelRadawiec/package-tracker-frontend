@@ -15,7 +15,7 @@ export class Order {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  displayedColumns: string[] = ['id', 'name', 'code', 'status'];
   private subscriptions: Subscription[] = [];
   orders: Order[] = [];
   stompClient: any;
@@ -39,7 +39,9 @@ export class HomeComponent implements OnInit {
     const topic = `/topic/package`;
     this.subscriptions.push(
       this.stompClient.subscribe(topic, (order) => {
-        console.log('ORDER: ', order);
+        const messageResult = JSON.parse(order.body);
+        this.orders.push(messageResult);
+        this.orders = [...this.orders];
       })
     );
   }
