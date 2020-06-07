@@ -7,6 +7,7 @@ export class Order {
   id: number;
   name: string;
   code: string;
+  statusColor: string;
 }
 
 @Component({
@@ -15,7 +16,7 @@ export class Order {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'code', 'status'];
+  displayedColumns: string[] = ['id', 'name', 'code', 'status', 'statusColor'];
   private subscriptions: Subscription[] = [];
   orders: Order[] = [];
   stompClient: any;
@@ -42,8 +43,13 @@ export class HomeComponent implements OnInit {
         const messageResult = JSON.parse(order.body);
         this.orders.push(messageResult);
         this.orders = [...this.orders];
+        this.sortOrders();
       })
     );
+  }
+
+  sortOrders() {
+    this.orders = this.orders.sort((a, b) => a.id - b.id);
   }
 
 }
