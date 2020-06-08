@@ -9,7 +9,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class OrderFormComponent implements OnInit {
 
   orderForm: FormGroup;
-
   orderTypes = [
     {
       type: 'SMALL',
@@ -20,7 +19,6 @@ export class OrderFormComponent implements OnInit {
       typeDescription: 'Large'
     },
   ];
-
   transports = [
     {
       type: 'DHL',
