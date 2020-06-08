@@ -24,6 +24,8 @@ body {
     grid-area: header;
   }
   
+  app-order-form,
+  app-order-status,
   app-home {
     grid-area: content;
     background-color:white;

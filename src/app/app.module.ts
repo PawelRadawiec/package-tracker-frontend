@@ -9,6 +9,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OrderFormComponent } from './components/order-form/order-form.component';
+import { OrderStatusComponent } from './components/order-status/order-status.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    OrderFormComponent,
+    OrderStatusComponent
   ],
   imports: [
     BrowserModule,
