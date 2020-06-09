@@ -4,7 +4,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { OrderState } from './store/order/order.state';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { OrderState } from './store/order/order.state';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSelectModule,
+    HttpClientModule,
     NgxsModule.forRoot([
       OrderState
     ]),

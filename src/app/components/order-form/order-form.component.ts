@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-order-form',
@@ -30,30 +31,37 @@ export class OrderFormComponent implements OnInit {
     },
   ];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private store: Store,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.initOrderForm();
   }
 
-  initForm() {
+  initOrderForm() {
     this.orderForm = this.formBuilder.group({
       name: [''],
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      street: [''],
-      city: [''],
-      postalCode: [''],
-      orderStartDate: [''],
-      orderEndDate: [''],
+      orderStartDate: [],
+      orderEndDate: [],
       orderType: [''],
-      transportType: ['']
+      transportType: [''],
+      person: this.formBuilder.group({
+        firstName: [''],
+        lastName: [''],
+        email: [''],
+      }),
+      address: this.formBuilder.group({
+        street: [''],
+        city: [''],
+        postalCode: ['']
+      })
     });
   }
 
   onSubmit() {
-    console.log('order');
+    console.log('orderForm: ', this.orderForm.value);
   }
 
 

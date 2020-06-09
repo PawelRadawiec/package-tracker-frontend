@@ -9,3 +9,12 @@ export class StartOrder {
     }
 
 }
+
+export class CreateOrder {
+    static readonly type = '[Order] CreateOrder';
+
+    constructor(public payload: Order) {
+
+    }
+
+}
