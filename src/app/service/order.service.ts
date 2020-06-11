@@ -7,12 +7,16 @@ import { Order } from '../components/home/home.component';
 })
 export class OrderService {
 
-  baseUrl = 'http://localhost:8080/order/';
+  baseUrl = 'http://localhost:8080/order';
 
   constructor(private http: HttpClient) { }
 
   create(payload: Order) {
     return this.http.post<Order>(`${this.baseUrl}/create`, payload);
+  }
+
+  start(payload: Order) {
+    return this.http.post<Order>(`${this.baseUrl}/start`, payload);
   }
 
 }

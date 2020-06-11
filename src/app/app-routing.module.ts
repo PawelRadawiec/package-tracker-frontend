@@ -16,7 +16,7 @@ const routes: Routes = [
     component: OrderFormComponent
   },
   {
-    path: 'status',
+    path: 'status/:packageCode',
     component: OrderStatusComponent
   },
   {

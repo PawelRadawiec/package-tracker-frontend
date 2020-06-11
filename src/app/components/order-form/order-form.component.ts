@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Store } from '@ngxs/store';
+import { CreateOrder } from 'src/app/store/order/order.actions';
 
 @Component({
   selector: 'app-order-form',
@@ -61,7 +62,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('orderForm: ', this.orderForm.value);
+    this.store.dispatch(new CreateOrder(this.orderForm.value));
   }
 
 
