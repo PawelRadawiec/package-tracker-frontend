@@ -6,6 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
+import { MatStepperModule} from '@angular/material/stepper';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +46,8 @@ import { OrderState } from './store/order/order.state';
     MatNativeDateModule,
     MatDatepickerModule,
     MatSelectModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
     HttpClientModule,
     NgxsModule.forRoot([
       OrderState

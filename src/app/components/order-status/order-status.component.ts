@@ -20,6 +20,11 @@ export class OrderStatusComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   stompClient: any;
 
+  // for test
+
+  isLinear = false;
+
+
   constructor() { }
 
   ngOnInit() {
