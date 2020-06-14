@@ -12,9 +12,21 @@ export class Order {
     transportType: string;
     person: OrderPerson;
     address: OrderAddress;
+    orderHistoryList: OrderHistory[];
 
     constructor(props = {}) {
         Object.assign(this, props);
     }
 
+}
+
+export class OrderHistory {
+    id: number;
+    code: string;
+    status: string;
+    statusColor: string;
+
+    constructor(props = {}) {
+        Object.assign(this, props);
+    }
 }

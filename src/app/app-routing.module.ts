@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { OrderFormComponent } from './components/order-form/order-form.component';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
+import { OrderResolver } from './resolvers/order.rsolver';
 
 
 const routes: Routes = [
@@ -16,8 +17,11 @@ const routes: Routes = [
     component: OrderFormComponent
   },
   {
-    path: 'status/:packageCode',
-    component: OrderStatusComponent
+    path: 'status/:id/:code',
+    component: OrderStatusComponent,
+    resolve: {
+      orderResolver: OrderResolver
+    }
   },
   {
     path: 'home',
@@ -27,6 +31,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [OrderResolver]
 })
 export class AppRoutingModule { }

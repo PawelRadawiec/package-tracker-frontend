@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { Order } from 'src/app/components/home/home.component';
-import { StartOrder, CreateOrder } from './order.actions';
+import { StartOrder, CreateOrder, GetOrderByIdAndCode } from './order.actions';
 import { OrderService } from 'src/app/service/order.service';
+import { Order } from 'src/app/models/order.model';
 
 
 export interface OrderStateModel {
@@ -41,7 +41,7 @@ export class OrderState {
                 state.patchState({
                     order: response
                 });
-                this.router.navigate([`status/${response.code}`]);
+                this.router.navigate([`status/${response.id}/${response.code}`]);
                 this.store.dispatch(new StartOrder(response));
             })
         );
@@ -51,6 +51,17 @@ export class OrderState {
     startOrder(state: StateContext<OrderStateModel>, action: StartOrder) {
         return this.orderService.start(action.payload).pipe(
             tap((response) => {
+                state.patchState({
+                    order: response
+                });
+            })
+        );
+    }
+
+    @Action(GetOrderByIdAndCode)
+    getOrderByIdAndCode(state: StateContext<OrderStateModel>, action: GetOrderByIdAndCode) {
+        return this.orderService.getByIdAndCode(action.id, action.code).pipe(
+            tap(response => {
                 state.patchState({
                     order: response
                 });

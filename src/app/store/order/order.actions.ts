@@ -1,4 +1,4 @@
-import { Order } from 'src/app/components/home/home.component';
+import { Order } from 'src/app/models/order.model';
 
 
 export class StartOrder {
@@ -17,5 +17,13 @@ export class CreateOrder {
 
     }
 
+}
+
+export class GetOrderByIdAndCode {
+    static readonly type = '[Order] GetOrderByIdAndCode';
+
+    constructor(public id: number, public code: string) {
+
+    }
 }
 
