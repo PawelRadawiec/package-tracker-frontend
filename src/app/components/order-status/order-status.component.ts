@@ -1,39 +1,46 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Subscription, Observable } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { Select } from '@ngxs/store';
 import { OrderState } from 'src/app/store/order/order.state';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-order-status',
   templateUrl: './order-status.component.html',
   styleUrls: ['./order-status.component.scss']
 })
-export class OrderStatusComponent implements OnInit, OnDestroy {
+export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('stepper') stepper: MatStepper;
   @Select(OrderState.getOrder) order$: Observable<Order>;
-
-  order: Order;
   displayedColumns: string[] = ['id', 'name', 'code', 'status', 'statusColor'];
-  private subscriptions: Subscription[] = [];
-  orders: Order[] = [];
   stompClient: any;
 
-  // for test
+  order: Order;
+  orders: Order[] = [];
 
-  isLinear = false;
+  private subscriptions: Subscription[] = [];
 
-
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.order$.subscribe(order => this.order = order));
+    this.subscriptions.push(this.order$.subscribe(order => {
+      if (order) {
+        this.order = order;
+      }
+    }));
     this.setWebSocketConntection();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe);
+  }
+
+  ngAfterViewInit() {
+    this.setStepperSelectedIndex(this.order.status);
+    this.cdr.detectChanges();
   }
 
   setWebSocketConntection() {
@@ -53,6 +60,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy {
         this.orders.push(messageResult);
         this.orders = [...this.orders];
         this.sortOrders();
+        this.nextStep();
       })
     );
   }
@@ -60,5 +68,33 @@ export class OrderStatusComponent implements OnInit, OnDestroy {
   sortOrders() {
     this.orders = this.orders.sort((a, b) => a.id - b.id);
   }
+
+  nextStep() {
+    this.stepper.next();
+  }
+
+  setStepperSelectedIndex(status: string) {
+    let index: number;
+    switch (status) {
+      case 'WAREHOUSE':
+        index = 1;
+        break;
+      case 'SORTING_PLANT':
+        index = 2;
+        break;
+      case 'TRANSPORT':
+        index = 3;
+        break;
+      case 'PARCEL_LOCKER':
+        index = 4;
+        break;
+      default:
+        index = 0;
+    }
+    if (index !== 0) {
+      this.stepper.selectedIndex = index;
+    }
+  }
+
 
 }

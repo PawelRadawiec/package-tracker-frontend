@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <table mat-table [dataSource]="orders" class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
@@ -31,29 +31,48 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>
-<div class="container">
-    <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-        {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-    </button>
-    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+</div> -->
+<div class="container status-stepper">
+    <mat-horizontal-stepper #stepper>
+        <mat-step [stepControl]="start_process">
+            <ng-template matStepLabel>Process start</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>We will take care of your package</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
         <mat-step [stepControl]="wareouse">
             <ng-template matStepLabel>Wareouse</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in wareouse</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
         </mat-step>
         <mat-step [stepControl]="sorting_plant">
             <ng-template matStepLabel>Sorting plant</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in sorting plant</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
         </mat-step>
         <mat-step [stepControl]="transport">
             <ng-template matStepLabel>Transport</ng-template>
-            <p>You are now done.</p>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in transport</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
         </mat-step>
         <mat-step [stepControl]="parcel_locker">
             <ng-template matStepLabel>Parcel locker</ng-template>
-            <p>You are now done.</p>
-        </mat-step>
-        <mat-step [stepControl]="done">
-            <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package inside parcel locker</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
         </mat-step>
     </mat-horizontal-stepper>
 </div>
