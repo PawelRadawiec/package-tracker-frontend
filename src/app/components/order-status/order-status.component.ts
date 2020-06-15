@@ -17,6 +17,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @Select(OrderState.getOrder) order$: Observable<Order>;
   displayedColumns: string[] = ['id', 'name', 'code', 'status', 'statusColor'];
   stompClient: any;
+  currentIndexStep: number;
 
   order: Order;
   orders: Order[] = [];
@@ -73,26 +74,30 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stepper.next();
   }
 
+  isStepActive(status: string) {
+    return this.getStatusStepperIndex(status) < this.currentIndexStep;
+  }
+
   setStepperSelectedIndex(status: string) {
-    let index: number;
-    switch (status) {
-      case 'WAREHOUSE':
-        index = 1;
-        break;
-      case 'SORTING_PLANT':
-        index = 2;
-        break;
-      case 'TRANSPORT':
-        index = 3;
-        break;
-      case 'PARCEL_LOCKER':
-        index = 4;
-        break;
-      default:
-        index = 0;
-    }
+    const index = this.getStatusStepperIndex(status);
+    this.currentIndexStep = index;
     if (index !== 0) {
       this.stepper.selectedIndex = index;
+    }
+  }
+
+  getStatusStepperIndex(status: string): number {
+    switch (status) {
+      case 'WAREHOUSE':
+        return 1;
+      case 'SORTING_PLANT':
+        return 2;
+      case 'TRANSPORT':
+        return 3;
+      case 'PARCEL_LOCKER':
+        return 4;
+      default:
+        return 0;
     }
   }
 
