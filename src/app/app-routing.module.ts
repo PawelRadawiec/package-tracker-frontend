@@ -9,7 +9,7 @@ import { OrderResolver } from './resolvers/order.rsolver';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'order',
     pathMatch: 'full'
   },
   {

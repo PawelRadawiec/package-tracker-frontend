@@ -34,7 +34,7 @@
 </div> -->
 <div class="container status-stepper">
     <mat-horizontal-stepper #stepper>
-        <mat-step [stepControl]="start_process">
+        <mat-step [stepControl]="start_process" [completed]="true">
             <ng-template matStepLabel>Process start</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>

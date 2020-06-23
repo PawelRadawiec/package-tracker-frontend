@@ -15,10 +15,16 @@ import { MatStepper } from '@angular/material/stepper';
 export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
   @Select(OrderState.getOrder) order$: Observable<Order>;
-  displayedColumns: string[] = ['id', 'name', 'code', 'status', 'statusColor'];
+
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'code',
+    'status',
+    'statusColor'
+  ];
   stompClient: any;
   currentIndexStep: number;
-
   order: Order;
   orders: Order[] = [];
 
@@ -61,7 +67,10 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         this.orders.push(messageResult);
         this.orders = [...this.orders];
         this.sortOrders();
-        this.nextStep();
+        if (Array.isArray(this.orders) && this.orders.length > 0) {
+          const lastOrder = this.orders[this.orders.length - 1];
+          this.setStepperSelectedIndex(lastOrder.status);
+        }
       })
     );
   }
@@ -100,6 +109,5 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
         return 0;
     }
   }
-
 
 }
