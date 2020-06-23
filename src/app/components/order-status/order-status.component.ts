@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
-import { Subscription, Observable } from 'rxjs';
-import { Order } from 'src/app/models/order.model';
 import { Select } from '@ngxs/store';
-import { OrderState } from 'src/app/store/order/order.state';
 import { MatStepper } from '@angular/material/stepper';
+import { Subscription, Observable } from 'rxjs';
+import SockJS from 'sockjs-client';
+import { Order } from 'src/app/models/order.model';
+import { OrderState } from 'src/app/store/order/order.state';
+
+import * as Stomp from 'stompjs';
+
 
 @Component({
   selector: 'app-order-status',
@@ -51,8 +53,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setWebSocketConntection() {
-    const ws = new SockJS('http://localhost:8080/ws');
-    this.stompClient = Stomp.over(ws);
+    this.stompClient = Stomp.over(new SockJS('http://localhost:8080/ws'));
     const that = this;
     this.stompClient.connect({}, () => {
       that.subscribeOrder();
@@ -60,9 +61,8 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   subscribeOrder() {
-    const topic = `/topic/package`;
     this.subscriptions.push(
-      this.stompClient.subscribe(topic, (order) => {
+      this.stompClient.subscribe(`/topic/package`, (order) => {
         const messageResult = JSON.parse(order.body);
         this.orders.push(messageResult);
         this.orders = [...this.orders];
