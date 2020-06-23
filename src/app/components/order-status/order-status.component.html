@@ -1,0 +1,78 @@
+<!-- <div class="container">
+    <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let order"> {{order.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> NAME </th>
+            <td mat-cell *matCellDef="let order"> {{order.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef> CODE </th>
+            <td mat-cell *matCellDef="let order"> {{order.code}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> STATUS </th>
+            <td mat-cell *matCellDef="let order"> {{order.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="statusColor">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let order">
+                <span class="dot" [style.background-color]="order.statusColor"></span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div> -->
+<div class="container status-stepper">
+    <mat-horizontal-stepper #stepper>
+        <mat-step [stepControl]="start_process" [completed]="true">
+            <ng-template matStepLabel>Process start</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>We will take care of your package</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
+        <mat-step [stepControl]="wareouse" [completed]="isStepActive('WAREHOUSE')">
+            <ng-template matStepLabel>Wareouse</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in wareouse</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
+        <mat-step [stepControl]="sorting_plant" [completed]="isStepActive('SORTING_PLANT')">
+            <ng-template matStepLabel>Sorting plant</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in sorting plant</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
+        <mat-step [stepControl]="transport" [completed]="isStepActive('TRANSPORT')">
+            <ng-template matStepLabel>Transport</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package in transport</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
+        <mat-step [stepControl]="parcel_locker" [completed]="isStepActive('PARCEL_LOCKER')">
+            <ng-template matStepLabel>Parcel locker</ng-template>
+            <mat-card class="info-card">
+                <mat-card-header>
+                    <mat-card-subtitle>Package inside parcel locker</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

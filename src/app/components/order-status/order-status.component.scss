@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+  }
+
+  .dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .status-stepper {
+    margin-top: 6%;
+  }
+
+  .info-card {
+      max-width: 300px;
+      margin: 10px;
+      margin: 0 auto;
+      width: 40%;
+  }
