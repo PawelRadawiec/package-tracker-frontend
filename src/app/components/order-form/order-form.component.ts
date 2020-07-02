@@ -4,6 +4,7 @@ import { Store, Select } from '@ngxs/store';
 import { CreateOrder } from 'src/app/store/order/order.actions';
 import { OrderState } from 'src/app/store/order/order.state';
 import { Observable } from 'rxjs';
+import { ErrorService } from 'src/app/service/error.service';
 
 @Component({
   selector: 'app-order-form',
@@ -36,7 +37,8 @@ export class OrderFormComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private errorService: ErrorService
   ) { }
 
   ngOnInit(): void {

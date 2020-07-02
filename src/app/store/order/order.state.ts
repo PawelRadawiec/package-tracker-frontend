@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
-import { StartOrder, CreateOrder, GetOrderByIdAndCode } from './order.actions';
+import { tap, catchError } from 'rxjs/operators';
+import { StartOrder, CreateOrder, GetOrderByIdAndCode, OrderRequestFailure } from './order.actions';
 import { OrderService } from 'src/app/service/order.service';
 import { Order } from 'src/app/models/order.model';
 
@@ -10,13 +10,15 @@ import { Order } from 'src/app/models/order.model';
 export interface OrderStateModel {
     order: Order;
     startLoading: boolean;
+    errors: { [key: string]: string; };
 }
 
 @State<OrderStateModel>({
     name: 'order',
     defaults: {
         order: null,
-        startLoading: false
+        startLoading: false,
+        errors: null
     }
 })
 
@@ -41,6 +43,11 @@ export class OrderState {
         return state.startLoading;
     }
 
+    @Selector()
+    static orderErrorMap(state: OrderStateModel) {
+        return state.errors;
+    }
+
     @Action(CreateOrder)
     createOrder(state: StateContext<OrderStateModel>, action: CreateOrder) {
         state.patchState({
@@ -54,6 +61,10 @@ export class OrderState {
                 });
                 this.router.navigate([`status/${response.id}/${response.code}`]);
                 this.store.dispatch(new StartOrder(response));
+            }),
+            catchError(error => {
+                console.log('Error occur: ', error);
+                return this.store.dispatch(new OrderRequestFailure(error.error));
             })
         );
     }
@@ -78,6 +89,14 @@ export class OrderState {
                 });
             })
         );
+    }
+
+    @Action(OrderRequestFailure)
+    requestFailure(state: StateContext<OrderStateModel>, action: OrderRequestFailure) {
+        state.patchState({
+            startLoading: false,
+            errors: action.errors
+        });
     }
 
 }

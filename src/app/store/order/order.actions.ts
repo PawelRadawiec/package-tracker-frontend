@@ -27,3 +27,11 @@ export class GetOrderByIdAndCode {
     }
 }
 
+export class OrderRequestFailure {
+    static readonly type = '[Order] OrderRequestFailure';
+
+    constructor(public errors: { [key: string]: string; }) {
+
+    }
+}
+
