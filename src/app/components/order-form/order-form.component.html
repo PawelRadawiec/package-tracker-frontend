@@ -88,6 +88,12 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <button type="submit" mat-raised-button color="primary">Start</button>
+        <!-- <button type="submit" mat-raised-button color="primary">Start</button> -->
+        <div class="button-container">
+            <div class="spinner-container" *ngIf="startLoading$ | async">
+                <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <button mat-raised-button [disabled]="startLoading$ | async" type="submit" color="primary">Start</button>
+        </div>
     </form>
 </div>

@@ -9,12 +9,14 @@ import { Order } from 'src/app/models/order.model';
 
 export interface OrderStateModel {
     order: Order;
+    startLoading: boolean;
 }
 
 @State<OrderStateModel>({
     name: 'order',
     defaults: {
-        order: null
+        order: null,
+        startLoading: false
     }
 })
 
@@ -34,12 +36,21 @@ export class OrderState {
         return state.order;
     }
 
+    @Selector()
+    static startLoading(state: OrderStateModel) {
+        return state.startLoading;
+    }
+
     @Action(CreateOrder)
     createOrder(state: StateContext<OrderStateModel>, action: CreateOrder) {
+        state.patchState({
+            startLoading: true
+        });
         return this.orderService.create(action.payload).pipe(
             tap(response => {
                 state.patchState({
-                    order: response
+                    order: response,
+                    startLoading: false
                 });
                 this.router.navigate([`status/${response.id}/${response.code}`]);
                 this.store.dispatch(new StartOrder(response));

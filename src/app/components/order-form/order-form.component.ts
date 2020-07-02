@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { CreateOrder } from 'src/app/store/order/order.actions';
+import { OrderState } from 'src/app/store/order/order.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-order-form',
@@ -9,7 +11,7 @@ import { CreateOrder } from 'src/app/store/order/order.actions';
   styleUrls: ['./order-form.component.scss']
 })
 export class OrderFormComponent implements OnInit {
-
+  @Select(OrderState.startLoading) startLoading$: Observable<boolean>;
   orderForm: FormGroup;
   orderTypes = [
     {
