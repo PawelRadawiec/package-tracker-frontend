@@ -18,6 +18,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
   @Select(OrderState.getOrder) order$: Observable<Order>;
 
+  private subscriptions: Subscription[] = [];
   displayedColumns: string[] = [
     'id',
     'name',
@@ -29,8 +30,6 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   currentIndexStep: number;
   order: Order;
   orders: Order[] = [];
-
-  private subscriptions: Subscription[] = [];
 
   constructor(private cdr: ChangeDetectorRef) { }
 
