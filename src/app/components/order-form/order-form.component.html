@@ -5,8 +5,8 @@
                 <mat-label>Order name</mat-label>
                 <input matInput placeholder="Name" formControlName="name">
             </mat-form-field>
-            <div class="text-danger" *ngIf="errorService.getErrorMessage('person.name')">
-                {{errorService.getErrorMessage('person.name')}}
+            <div class="text-danger" *ngIf="errorService.getErrorMessage('name')">
+                {{errorService.getErrorMessage('name')}}
             </div>
         </div>
 
@@ -93,7 +93,7 @@
         <div class="form-group">
             <mat-form-field class="input-inline">
                 <mat-label>Order type</mat-label>
-                <mat-select>
+                <mat-select formControlName="orderType"> 
                     <mat-option *ngFor="let type of orderTypes" [value]="type.type">
                         {{type.typeDescription}}
                     </mat-option>
@@ -105,7 +105,7 @@
 
             <mat-form-field class="input-inline">
                 <mat-label>Transport type</mat-label>
-                <mat-select>
+                <mat-select formControlName="transportType">
                     <mat-option *ngFor="let transport of transports" [value]="transport.type">
                         {{transport.transportDescription}}
                     </mat-option>

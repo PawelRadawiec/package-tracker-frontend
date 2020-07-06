@@ -1,5 +1,6 @@
 <div class="container status-stepper">
-    <mat-horizontal-stepper #stepper>
+    <button mat-raised-button color="primary" (click)="openHistory()">Show history</button>
+    <mat-horizontal-stepper [linear]="false" #stepper>
         <mat-step [stepControl]="start_process" [completed]="true">
             <ng-template matStepLabel>Process start</ng-template>
             <mat-card class="info-card">

@@ -25,6 +25,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OrderState } from './store/order/order.state';
+import { OrderHistoryDialogComponent } from './components/order-history-dialog/order-history-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { OrderState } from './store/order/order.state';
     HomeComponent,
     NavbarComponent,
     OrderFormComponent,
-    OrderStatusComponent
+    OrderStatusComponent,
+    OrderHistoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { OrderState } from './store/order/order.state';
     BrowserAnimationsModule,
     MatStepperModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     HttpClientModule,
     NgxsModule.forRoot([
       OrderState

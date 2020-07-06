@@ -7,6 +7,8 @@ import { Order } from 'src/app/models/order.model';
 import { OrderState } from 'src/app/store/order/order.state';
 
 import * as Stomp from 'stompjs';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderHistoryDialogComponent } from '../order-history-dialog/order-history-dialog.component';
 
 
 @Component({
@@ -17,21 +19,16 @@ import * as Stomp from 'stompjs';
 export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
   @Select(OrderState.getOrder) order$: Observable<Order>;
-
   private subscriptions: Subscription[] = [];
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    'code',
-    'status',
-    'statusColor'
-  ];
   stompClient: any;
   currentIndexStep: number;
   order: Order;
   orders: Order[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    public dialog: MatDialog
+    ) { }
 
   ngOnInit() {
     this.subscriptions.push(this.order$.subscribe(order => {
@@ -92,6 +89,10 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     if (index !== 0) {
       this.stepper.selectedIndex = index;
     }
+  }
+
+  openHistory() {
+      this.dialog.open(OrderHistoryDialogComponent);
   }
 
   getStatusStepperIndex(status: string): number {
