@@ -9,6 +9,7 @@ import { OrderState } from 'src/app/store/order/order.state';
 import * as Stomp from 'stompjs';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderHistoryDialogComponent } from '../order-history-dialog/order-history-dialog.component';
+import { OrderHelper } from 'src/app/helper/order-helper';
 
 
 @Component({
@@ -27,8 +28,9 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    public dialog: MatDialog
-    ) { }
+    public dialog: MatDialog,
+    private orderHelper: OrderHelper
+  ) { }
 
   ngOnInit() {
     this.subscriptions.push(this.order$.subscribe(order => {
@@ -51,18 +53,16 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   setWebSocketConntection() {
     this.stompClient = Stomp.over(new SockJS('http://localhost:8080/ws'));
     const that = this;
-    this.stompClient.connect({}, () => {
-      that.subscribeOrder();
-    });
+    this.stompClient.connect({}, () => that.handleConnection());
   }
 
-  subscribeOrder() {
+  handleConnection() {
     this.subscriptions.push(
       this.stompClient.subscribe(`/topic/package`, (order) => {
         const messageResult = JSON.parse(order.body);
         this.orders.push(messageResult);
         this.orders = [...this.orders];
-        this.sortOrders();
+        this.orders = this.orders.sort((a, b) => a.id - b.id);
         if (Array.isArray(this.orders) && this.orders.length > 0) {
           const lastOrder = this.orders[this.orders.length - 1];
           this.setStepperSelectedIndex(lastOrder.status);
@@ -71,20 +71,12 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  sortOrders() {
-    this.orders = this.orders.sort((a, b) => a.id - b.id);
-  }
-
   nextStep() {
     this.stepper.next();
   }
 
-  isStepActive(status: string) {
-    return this.getStatusStepperIndex(status) < this.currentIndexStep;
-  }
-
   setStepperSelectedIndex(status: string) {
-    const index = this.getStatusStepperIndex(status);
+    const index = this.orderHelper.getStatusStepperIndex(status);
     this.currentIndexStep = index;
     if (index !== 0) {
       this.stepper.selectedIndex = index;
@@ -92,22 +84,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openHistory() {
-      this.dialog.open(OrderHistoryDialogComponent);
-  }
-
-  getStatusStepperIndex(status: string): number {
-    switch (status) {
-      case 'WAREHOUSE':
-        return 1;
-      case 'SORTING_PLANT':
-        return 2;
-      case 'TRANSPORT':
-        return 3;
-      case 'PARCEL_LOCKER':
-        return 4;
-      default:
-        return 0;
-    }
+    this.dialog.open(OrderHistoryDialogComponent);
   }
 
 }

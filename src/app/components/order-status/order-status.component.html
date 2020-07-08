@@ -9,7 +9,7 @@
                 </mat-card-header>
             </mat-card>
         </mat-step>
-        <mat-step [stepControl]="wareouse" [completed]="isStepActive('WAREHOUSE')">
+        <mat-step [stepControl]="wareouse" [completed]="this.orderHelper.isStepActive('WAREHOUSE', currentIndexStep)">
             <ng-template matStepLabel>Wareouse</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
@@ -17,7 +17,7 @@
                 </mat-card-header>
             </mat-card>
         </mat-step>
-        <mat-step [stepControl]="sorting_plant" [completed]="isStepActive('SORTING_PLANT')">
+        <mat-step [stepControl]="sorting_plant" [completed]="this.orderHelper.isStepActive('SORTING_PLANT', currentIndexStep)">
             <ng-template matStepLabel>Sorting plant</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
@@ -25,7 +25,7 @@
                 </mat-card-header>
             </mat-card>
         </mat-step>
-        <mat-step [stepControl]="transport" [completed]="isStepActive('TRANSPORT')">
+        <mat-step [stepControl]="transport" [completed]="this.orderHelper.isStepActive('TRANSPORT', currentIndexStep)">
             <ng-template matStepLabel>Transport</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
@@ -33,7 +33,7 @@
                 </mat-card-header>
             </mat-card>
         </mat-step>
-        <mat-step [stepControl]="parcel_locker" [completed]="isStepActive('PARCEL_LOCKER')">
+        <mat-step [stepControl]="parcel_locker" [completed]="this.orderHelper.isStepActive('PARCEL_LOCKER', currentIndexStep)">
             <ng-template matStepLabel>Parcel locker</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
