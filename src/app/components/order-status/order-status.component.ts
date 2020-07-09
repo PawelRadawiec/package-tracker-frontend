@@ -44,7 +44,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe);
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   ngAfterViewInit() {

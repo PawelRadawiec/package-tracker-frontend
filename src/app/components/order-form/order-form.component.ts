@@ -38,10 +38,10 @@ export class OrderFormComponent implements OnInit {
   constructor(
     private store: Store,
     private formBuilder: FormBuilder,
-    private errorService: ErrorService
+    public errorService: ErrorService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.initOrderForm();
   }
 
@@ -68,6 +68,5 @@ export class OrderFormComponent implements OnInit {
   onSubmit() {
     this.store.dispatch(new CreateOrder(this.orderForm.value));
   }
-
 
 }

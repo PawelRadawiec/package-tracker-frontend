@@ -1,7 +1,7 @@
 <div class="container status-stepper">
     <button mat-raised-button color="primary" (click)="openHistory()">Show history</button>
     <mat-horizontal-stepper [linear]="false" #stepper>
-        <mat-step [stepControl]="start_process" [completed]="bullet.done" *ngFor="let bullet of bullets">
+        <mat-step [completed]="bullet.done" *ngFor="let bullet of bullets">
             <ng-template matStepLabel>{{bullet.header}}</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
