@@ -1,43 +1,11 @@
 <div class="container status-stepper">
     <button mat-raised-button color="primary" (click)="openHistory()">Show history</button>
     <mat-horizontal-stepper [linear]="false" #stepper>
-        <mat-step [stepControl]="start_process" [completed]="true">
-            <ng-template matStepLabel>Process start</ng-template>
+        <mat-step [stepControl]="start_process" [completed]="bullet.done" *ngFor="let bullet of bullets">
+            <ng-template matStepLabel>{{bullet.header}}</ng-template>
             <mat-card class="info-card">
                 <mat-card-header>
-                    <mat-card-subtitle>We will take care of your package</mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </mat-step>
-        <mat-step [stepControl]="wareouse" [completed]="this.orderHelper.isStepActive('WAREHOUSE', currentIndexStep)">
-            <ng-template matStepLabel>Wareouse</ng-template>
-            <mat-card class="info-card">
-                <mat-card-header>
-                    <mat-card-subtitle>Package in wareouse</mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </mat-step>
-        <mat-step [stepControl]="sorting_plant" [completed]="this.orderHelper.isStepActive('SORTING_PLANT', currentIndexStep)">
-            <ng-template matStepLabel>Sorting plant</ng-template>
-            <mat-card class="info-card">
-                <mat-card-header>
-                    <mat-card-subtitle>Package in sorting plant</mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </mat-step>
-        <mat-step [stepControl]="transport" [completed]="this.orderHelper.isStepActive('TRANSPORT', currentIndexStep)">
-            <ng-template matStepLabel>Transport</ng-template>
-            <mat-card class="info-card">
-                <mat-card-header>
-                    <mat-card-subtitle>Package in transport</mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </mat-step>
-        <mat-step [stepControl]="parcel_locker" [completed]="this.orderHelper.isStepActive('PARCEL_LOCKER', currentIndexStep)">
-            <ng-template matStepLabel>Parcel locker</ng-template>
-            <mat-card class="info-card">
-                <mat-card-header>
-                    <mat-card-subtitle>Package inside parcel locker</mat-card-subtitle>
+                    <mat-card-subtitle>{{bullet.content}}</mat-card-subtitle>
                 </mat-card-header>
             </mat-card>
         </mat-step>

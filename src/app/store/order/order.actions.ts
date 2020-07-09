@@ -27,6 +27,10 @@ export class GetOrderByIdAndCode {
     }
 }
 
+export class GetBullets {
+    static readonly type = '[Order] GetBullets';
+}
+
 export class OrderRequestFailure {
     static readonly type = '[Order] OrderRequestFailure';
 

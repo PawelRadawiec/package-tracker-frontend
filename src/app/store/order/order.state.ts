@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
-import { StartOrder, CreateOrder, GetOrderByIdAndCode, OrderRequestFailure } from './order.actions';
+import { StartOrder, CreateOrder, GetOrderByIdAndCode, OrderRequestFailure, GetBullets } from './order.actions';
 import { OrderService } from 'src/app/service/order.service';
 import { Order } from 'src/app/models/order.model';
+import { Bullet } from 'src/app/models/bullet.model';
 
 
 export interface OrderStateModel {
     order: Order;
     startLoading: boolean;
+    bullets: Bullet[];
     errors: { [key: string]: string; };
 }
 
@@ -18,6 +20,7 @@ export interface OrderStateModel {
     defaults: {
         order: null,
         startLoading: false,
+        bullets: [],
         errors: null
     }
 })
@@ -46,6 +49,11 @@ export class OrderState {
     @Selector()
     static orderErrorMap(state: OrderStateModel) {
         return state.errors;
+    }
+
+    @Selector()
+    static bullets(state: OrderStateModel) {
+        return state.bullets;
     }
 
     @Action(CreateOrder)
@@ -86,6 +94,17 @@ export class OrderState {
             tap(response => {
                 state.patchState({
                     order: response
+                });
+            })
+        );
+    }
+
+    @Action(GetBullets)
+    getBulletsList(state: StateContext<OrderStateModel>) {
+        return this.orderService.getBullets().pipe(
+            tap(response => {
+                state.patchState({
+                    bullets: response
                 });
             })
         );
