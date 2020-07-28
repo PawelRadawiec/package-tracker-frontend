@@ -71,7 +71,10 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
 
   handleConnection() {
     this.subscriptions.push(
-      this.stompClient.subscribe(`/topic/package`, (order: { body: string; }) => this.updateBullet(JSON.parse(order.body)))
+      this.stompClient.subscribe(
+        `/topic/package`,
+        (order: { body: string; }) => this.updateBullet(JSON.parse(order.body))
+      )
     );
   }
 

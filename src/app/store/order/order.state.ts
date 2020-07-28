@@ -12,7 +12,7 @@ export interface OrderStateModel {
     order: Order;
     startLoading: boolean;
     bullets: Bullet[];
-    errors: { [key: string]: string; };
+    errors: Map<string, string>;
 }
 
 @State<OrderStateModel>({
@@ -21,7 +21,7 @@ export interface OrderStateModel {
         order: null,
         startLoading: false,
         bullets: [],
-        errors: null
+        errors: new Map()
     }
 })
 

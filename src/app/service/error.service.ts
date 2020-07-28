@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { OrderState } from '../store/order/order.state';
-import { Observable, Subscription } from 'rxjs';
 import { Select } from '@ngxs/store';
+import { FormGroup } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
+  @Select(OrderState.orderErrorMap) errors$: Observable<Map<string, string>>;
+  private errorsMap: Map<string, string>;
+  private subscription: Subscription;
 
-  @Select(OrderState.orderErrorMap) errors$: Observable<{ [key: string]: string; }>;
-  errors: { [key: string]: string; } = {};
-  subscription: Subscription;
+  public form: FormGroup;
 
   constructor() {
-    this.subscription = this.errors$.subscribe(errors => this.errors = errors);
+    this.subscription = this.errors$.subscribe(errors => this.handleErrorsSubscription(errors));
   }
 
-  getErrorMessage(field: string) {
-    if (!this.errors) {
-      return null;
+  private handleErrorsSubscription(errorsMap: Map<string, string>) {
+    this.errorsMap = errorsMap;
+    for (const [key, value] of Object.entries(this.errorsMap)) {
+      const formControl = this.form.get(key);
+      if (formControl) {
+        formControl.setErrors({ serverError: value });
+      }
     }
-    return this.errors[field];
+  }
+
+  hasError(field: string): boolean {
+    return this.getErrorMessage(field);
+  }
+
+  getErrorMessage(field: string): boolean {
+    if (!this.form) {
+      return false;
+    }
+    return this.form.get(field).errors?.serverError;
   }
 
 }

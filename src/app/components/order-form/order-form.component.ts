@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { CreateOrder } from 'src/app/store/order/order.actions';
 import { OrderState } from 'src/app/store/order/order.state';
@@ -43,6 +43,7 @@ export class OrderFormComponent implements OnInit {
 
   ngOnInit() {
     this.initOrderForm();
+    this.errorService.form = this.orderForm;
   }
 
   initOrderForm() {

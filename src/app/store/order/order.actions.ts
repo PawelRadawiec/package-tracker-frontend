@@ -34,7 +34,7 @@ export class GetBullets {
 export class OrderRequestFailure {
     static readonly type = '[Order] OrderRequestFailure';
 
-    constructor(public errors: { [key: string]: string; }) {
+    constructor(public errors: Map<string, string>) {
 
     }
 }

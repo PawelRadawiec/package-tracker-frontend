@@ -5,9 +5,9 @@
                 <mat-label>Order name</mat-label>
                 <input matInput placeholder="Name" formControlName="name">
             </mat-form-field>
-            <div class="text-danger" *ngIf="errorService.getErrorMessage('name')">
-                {{errorService.getErrorMessage('name')}}
-            </div>
+            <mat-error *ngIf="errorService.hasError('name')">
+                {{ errorService.getErrorMessage('name') }}
+            </mat-error>
         </div>
 
         <div formGroupName="person">
@@ -16,9 +16,9 @@
                     <mat-label>First name</mat-label>
                     <input matInput placeholder="First name" formControlName="firstName">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('person.firstName')">
-                    {{errorService.getErrorMessage('person.firstName')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('person.firstName')">
+                    {{ errorService.getErrorMessage('person.firstName') }}
+                </mat-error>
             </div>
 
             <div class="form-group">
@@ -26,9 +26,9 @@
                     <mat-label>Last name</mat-label>
                     <input matInput placeholder="Last name" formControlName="lastName">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('person.lastName')">
-                    {{errorService.getErrorMessage('person.lastName')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('person.lastName')">
+                    {{ errorService.getErrorMessage('person.lastName') }}
+                </mat-error>
             </div>
 
             <div class="form-group">
@@ -36,9 +36,9 @@
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="email">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('person.email')">
-                    {{errorService.getErrorMessage('person.firstName')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('person.email')">
+                    {{ errorService.getErrorMessage('person.email') }}
+                </mat-error>
             </div>
         </div>
 
@@ -48,9 +48,9 @@
                     <mat-label>City</mat-label>
                     <input matInput placeholder="City" formControlName="city">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('address.city')">
-                    {{errorService.getErrorMessage('address.city')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('address.city')">
+                    {{ errorService.getErrorMessage('address.city') }}
+                </mat-error>
             </div>
 
             <div class="form-group">
@@ -58,9 +58,9 @@
                     <mat-label>Street</mat-label>
                     <input matInput placeholder="Street" formControlName="street">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('address.street')">
-                    {{errorService.getErrorMessage('address.street')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('address.street')">
+                    {{ errorService.getErrorMessage('address.street') }}
+                </mat-error>
             </div>
 
             <div class="form-group">
@@ -68,9 +68,9 @@
                     <mat-label>Postal code</mat-label>
                     <input matInput placeholder="Postal code" formControlName="postalCode">
                 </mat-form-field>
-                <div class="text-danger" *ngIf="errorService.getErrorMessage('address.postalCode')">
-                    {{errorService.getErrorMessage('address.postalCode')}}
-                </div>
+                <mat-error *ngIf="errorService.hasError('address.postalCode')">
+                    {{ errorService.getErrorMessage('address.postalCode') }}
+                </mat-error>
             </div>
         </div>
 
@@ -93,15 +93,15 @@
         <div class="form-group">
             <mat-form-field class="input-inline">
                 <mat-label>Order type</mat-label>
-                <mat-select formControlName="orderType"> 
+                <mat-select formControlName="orderType">
                     <mat-option *ngFor="let type of orderTypes" [value]="type.type">
                         {{type.typeDescription}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <div class="text-danger" *ngIf="errorService.getErrorMessage('orderType')">
-                {{errorService.getErrorMessage('address.postalCode')}}
-            </div>
+            <mat-error *ngIf="errorService.hasError('orderType')">
+                {{ errorService.getErrorMessage('orderType') }}
+            </mat-error>
 
             <mat-form-field class="input-inline">
                 <mat-label>Transport type</mat-label>
