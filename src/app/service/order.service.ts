@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Order } from '../models/order.model';
+import { Order, OrderHistory } from '../models/order.model';
 import { Bullet } from '../models/bullet.model';
 
 @Injectable({
@@ -27,6 +27,10 @@ export class OrderService {
 
   getBullets() {
     return this.http.get<Bullet[]>(`${this.bulletUrl}/list`);
+  }
+
+  getOrderHistory(orderId: number) {
+    return this.http.get<OrderHistory[]>(`${this.baseUrl}/${orderId}/history`);
   }
 
 }

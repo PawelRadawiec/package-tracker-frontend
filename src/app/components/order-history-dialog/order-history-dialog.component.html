@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>Order with code #{{order.code}}</h2>
+<h2 mat-dialog-title>Order with code #{{orderCode}}</h2>
 <mat-dialog-content class="mat-typography">
     <h3>Order history list</h3>
-    <table mat-table [dataSource]="order.orderHistoryList">
+    <table mat-table [dataSource]="orderHistory">
         <ng-container matColumnDef="id">
             <th mat-header-cell class="id-column" *matHeaderCellDef> ID </th>
             <td mat-cell *matCellDef="let order"> {{order.id}} </td>

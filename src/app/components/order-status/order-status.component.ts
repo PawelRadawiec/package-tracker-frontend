@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Select } from '@ngxs/store';
 import { MatStepper } from '@angular/material/stepper';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { OrderState } from 'src/app/store/order/order.state';
 import { MatDialog } from '@angular/material/dialog';
-import { OrderHistoryDialogComponent } from '../order-history-dialog/order-history-dialog.component';
 import { OrderHelper } from 'src/app/helper/order-helper';
 import { Bullet } from 'src/app/models/bullet.model';
 
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
+import { Store } from '@ngxs/store';
+import { GetOrderHistoryRequest } from 'src/app/store/order/order.actions';
 
 
 @Component({
@@ -20,16 +20,14 @@ import * as Stomp from 'stompjs';
 })
 export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
-  @Select(OrderState.getOrder) order$: Observable<Order>;
-  @Select(OrderState.bullets) bullets$: Observable<Bullet[]>;
-
   private subscriptions: Subscription[] = [];
-  stompClient: any;
-  currentIndexStep: number;
-  order: Order;
   bullets: Bullet[] = [];
+  currentIndexStep: number;
+  stompClient: any;
+  order: Order;
 
   constructor(
+    private store: Store,
     private cdr: ChangeDetectorRef,
     public dialog: MatDialog,
     private orderHelper: OrderHelper
@@ -37,8 +35,8 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.order$.subscribe(order => this.handleOrderSubscription(order)),
-      this.bullets$.subscribe(bullets => this.handleBulletsSubscription(bullets))
+      this.store.select(OrderState.getOrder).subscribe(order => this.handleOrderSubscription(order)),
+      this.store.select(OrderState.bullets).subscribe(bullets => this.handleBulletsSubscription(bullets))
     );
     this.setWebSocketConntection();
   }
@@ -72,7 +70,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   handleConnection() {
     this.subscriptions.push(
       this.stompClient.subscribe(
-        `/topic/package`,
+        `/topic/message.${this.order.code}`,
         (order: { body: string; }) => this.updateBullet(JSON.parse(order.body))
       )
     );
@@ -96,7 +94,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openHistory() {
-    this.dialog.open(OrderHistoryDialogComponent);
+    this.store.dispatch(new GetOrderHistoryRequest(this.order.id));
   }
 
   nextStep() {

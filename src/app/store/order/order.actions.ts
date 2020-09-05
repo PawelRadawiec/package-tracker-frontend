@@ -1,4 +1,4 @@
-import { Order } from 'src/app/models/order.model';
+import { Order, OrderHistory } from 'src/app/models/order.model';
 
 
 export class StartOrder {
@@ -38,4 +38,22 @@ export class OrderRequestFailure {
 
     }
 }
+
+export class GetOrderHistoryRequest {
+    static readonly type = '[Order] GetOrderHistoryRequest';
+
+    constructor(public orderId: number) {
+
+    }
+}
+
+export class GetOrderHistoryResponse {
+    static readonly type = '[Order] GetOrderHistoryResponse';
+
+    constructor(public orderHistory: OrderHistory[]) {
+
+    }
+}
+
+
 

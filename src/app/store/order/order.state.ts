@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { State, Selector, Action, StateContext, Store } from '@ngxs/store';
-import { tap, catchError } from 'rxjs/operators';
-import { StartOrder, CreateOrder, GetOrderByIdAndCode, OrderRequestFailure, GetBullets } from './order.actions';
+import { tap, catchError, mergeMap } from 'rxjs/operators';
 import { OrderService } from 'src/app/service/order.service';
-import { Order } from 'src/app/models/order.model';
+import { Order, OrderHistory } from 'src/app/models/order.model';
 import { Bullet } from 'src/app/models/bullet.model';
-
+import {
+    CreateOrder, StartOrder, OrderRequestFailure,
+    GetOrderByIdAndCode, GetBullets, GetOrderHistoryRequest,
+    GetOrderHistoryResponse
+} from './order.actions';
+import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
 
 export interface OrderStateModel {
     order: Order;
     startLoading: boolean;
     bullets: Bullet[];
+    orderHistory: OrderHistory[];
     errors: Map<string, string>;
 }
 
@@ -21,6 +26,7 @@ export interface OrderStateModel {
         order: null,
         startLoading: false,
         bullets: [],
+        orderHistory: [],
         errors: new Map()
     }
 })
@@ -29,9 +35,10 @@ export interface OrderStateModel {
 export class OrderState {
 
     constructor(
-        private orderService: OrderService,
         private router: Router,
-        private store: Store
+        private store: Store,
+        private orderService: OrderService,
+        private dialogHelper: ModalHelperService
     ) {
 
     }
@@ -54,6 +61,11 @@ export class OrderState {
     @Selector()
     static bullets(state: OrderStateModel) {
         return state.bullets;
+    }
+
+    @Selector()
+    static orderHistory(state: OrderStateModel) {
+        return state.orderHistory;
     }
 
     @Action(CreateOrder)
@@ -108,6 +120,23 @@ export class OrderState {
                 });
             })
         );
+    }
+
+    @Action(GetOrderHistoryRequest)
+    getOrderHistoryRequest(state: StateContext<OrderStateModel>, action: GetOrderHistoryRequest) {
+        return this.orderService.getOrderHistory(action.orderId).pipe(
+            mergeMap(response => this.store.dispatch(new GetOrderHistoryResponse(response))),
+            catchError(error => this.store.dispatch(new OrderRequestFailure(error.error)))
+        );
+    }
+
+    @Action(GetOrderHistoryResponse)
+    getOrderHistoryResponse(state: StateContext<OrderStateModel>, action: GetOrderHistoryResponse) {
+        const response = action.orderHistory;
+        state.patchState({
+            orderHistory: response
+        });
+        this.dialogHelper.openDialogByCode(DialogCode.ORDER_HISTORY, response);
     }
 
     @Action(OrderRequestFailure)
