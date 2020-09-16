@@ -6,7 +6,8 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
-import { MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OrderState } from './store/order/order.state';
 import { OrderHistoryDialogComponent } from './components/order-history-dialog/order-history-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     NavbarComponent,
     OrderFormComponent,
     OrderStatusComponent,
-    OrderHistoryDialogComponent
+    OrderHistoryDialogComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatStepperModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
       OrderState

@@ -55,5 +55,21 @@ export class GetOrderHistoryResponse {
     }
 }
 
+export class SearchOrderListRequest {
+    static readonly type = '[Order] SearchOrderListRequest';
+
+    constructor() {
+
+    }
+}
+
+export class SearchOrderListResponse {
+    static readonly type = '[Order] SearchOrderListResponse';
+
+    constructor(public response: Order[]) {
+
+    }
+}
+
 
 

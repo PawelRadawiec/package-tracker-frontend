@@ -33,4 +33,8 @@ export class OrderService {
     return this.http.get<OrderHistory[]>(`${this.baseUrl}/${orderId}/history`);
   }
 
+  search() {
+    return this.http.get<Order[]>(`${this.baseUrl}/search`);
+  }
+
 }

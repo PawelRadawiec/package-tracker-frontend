@@ -8,7 +8,9 @@ import { Bullet } from 'src/app/models/bullet.model';
 import {
     CreateOrder, StartOrder, OrderRequestFailure,
     GetOrderByIdAndCode, GetBullets, GetOrderHistoryRequest,
-    GetOrderHistoryResponse
+    GetOrderHistoryResponse,
+    SearchOrderListRequest,
+    SearchOrderListResponse
 } from './order.actions';
 import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
 
@@ -17,6 +19,7 @@ export interface OrderStateModel {
     startLoading: boolean;
     bullets: Bullet[];
     orderHistory: OrderHistory[];
+    orderList: Order[];
     errors: Map<string, string>;
 }
 
@@ -27,6 +30,7 @@ export interface OrderStateModel {
         startLoading: false,
         bullets: [],
         orderHistory: [],
+        orderList: [],
         errors: new Map()
     }
 })
@@ -66,6 +70,11 @@ export class OrderState {
     @Selector()
     static orderHistory(state: OrderStateModel) {
         return state.orderHistory;
+    }
+
+    @Selector()
+    static orderList(state: OrderStateModel) {
+        return state.orderList;
     }
 
     @Action(CreateOrder)
@@ -137,6 +146,21 @@ export class OrderState {
             orderHistory: response
         });
         this.dialogHelper.openDialogByCode(DialogCode.ORDER_HISTORY, response);
+    }
+
+    @Action(SearchOrderListRequest)
+    searchOrderRequest(state: StateContext<OrderStateModel>, action: SearchOrderListRequest) {
+        return this.orderService.search().pipe(
+            mergeMap(response => this.store.dispatch(new SearchOrderListResponse(response))),
+            catchError(error => this.store.dispatch(new OrderRequestFailure(error.error)))
+        );
+    }
+
+    @Action(SearchOrderListResponse)
+    searchOrderResponse(state: StateContext<OrderStateModel>, action: SearchOrderListResponse) {
+        state.patchState({
+            orderList: action.response
+        });
     }
 
     @Action(OrderRequestFailure)
