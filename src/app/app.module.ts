@@ -30,6 +30,7 @@ import { OrderHistoryDialogComponent } from './components/order-history-dialog/o
 import { MatDialogModule } from '@angular/material/dialog';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { AsideComponent } from './components/aside/aside.component';
+import { SearchFormComponent } from './components/search-form/search-form.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { AsideComponent } from './components/aside/aside.component';
     OrderStatusComponent,
     OrderHistoryDialogComponent,
     OrderListComponent,
-    AsideComponent
+    AsideComponent,
+    SearchFormComponent
   ],
   imports: [
     BrowserModule,
