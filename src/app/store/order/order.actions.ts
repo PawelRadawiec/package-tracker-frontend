@@ -1,5 +1,6 @@
 import { Order, OrderHistory } from 'src/app/models/order.model';
 import { Page } from 'src/app/models/page/page.model';
+import { OrderListRequest } from 'src/app/models/order-list-request.model';
 
 
 export class StartOrder {
@@ -59,7 +60,7 @@ export class GetOrderHistoryResponse {
 export class SearchOrderListRequest {
     static readonly type = '[Order] SearchOrderListRequest';
 
-    constructor() {
+    constructor(public request?: OrderListRequest) {
 
     }
 }
@@ -68,6 +69,14 @@ export class SearchOrderListResponse {
     static readonly type = '[Order] SearchOrderListResponse';
 
     constructor(public response: Page) {
+
+    }
+}
+
+export class SearchOrderListDebounce {
+    static readonly type = '[Order] SearchOrderListDebounce';
+
+    constructor(public request: OrderListRequest) {
 
     }
 }

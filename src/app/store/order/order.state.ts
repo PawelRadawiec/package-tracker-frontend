@@ -151,7 +151,7 @@ export class OrderState {
 
     @Action(SearchOrderListRequest)
     searchOrderRequest(state: StateContext<OrderStateModel>, action: SearchOrderListRequest) {
-        return this.orderService.search().pipe(
+        return this.orderService.search(action.request).pipe(
             mergeMap(response => this.store.dispatch(new SearchOrderListResponse(response))),
             catchError(error => this.store.dispatch(new OrderRequestFailure(error.error)))
         );
