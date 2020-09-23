@@ -1,6 +1,6 @@
 <app-search-form></app-search-form>
 <div class="order-list" fxLayout="row wrap" fxLayoutGap="10px">
-    <div fxFlex="20%" *ngFor="let order of orders">
+    <div fxFlex="20%" *ngFor="let order of page.content">
         <mat-card class="mat-elevation-z4">
             <mat-card-header>
                 <mat-card-title>{{order.name}}</mat-card-title>

@@ -13,13 +13,14 @@ import {
     SearchOrderListResponse
 } from './order.actions';
 import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
+import { Page } from 'src/app/models/page/page.model';
 
 export interface OrderStateModel {
     order: Order;
     startLoading: boolean;
     bullets: Bullet[];
     orderHistory: OrderHistory[];
-    orderList: Order[];
+    page: Page;
     errors: Map<string, string>;
 }
 
@@ -30,7 +31,7 @@ export interface OrderStateModel {
         startLoading: false,
         bullets: [],
         orderHistory: [],
-        orderList: [],
+        page: null,
         errors: new Map()
     }
 })
@@ -73,8 +74,8 @@ export class OrderState {
     }
 
     @Selector()
-    static orderList(state: OrderStateModel) {
-        return state.orderList;
+    static page(state: OrderStateModel) {
+        return state.page;
     }
 
     @Action(CreateOrder)
@@ -159,7 +160,7 @@ export class OrderState {
     @Action(SearchOrderListResponse)
     searchOrderResponse(state: StateContext<OrderStateModel>, action: SearchOrderListResponse) {
         state.patchState({
-            orderList: action.response
+            page: action.response
         });
     }
 

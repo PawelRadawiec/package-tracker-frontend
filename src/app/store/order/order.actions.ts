@@ -1,4 +1,5 @@
 import { Order, OrderHistory } from 'src/app/models/order.model';
+import { Page } from 'src/app/models/page/page.model';
 
 
 export class StartOrder {
@@ -66,7 +67,7 @@ export class SearchOrderListRequest {
 export class SearchOrderListResponse {
     static readonly type = '[Order] SearchOrderListResponse';
 
-    constructor(public response: Order[]) {
+    constructor(public response: Page) {
 
     }
 }

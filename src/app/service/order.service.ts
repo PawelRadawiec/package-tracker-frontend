@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order, OrderHistory } from '../models/order.model';
 import { Bullet } from '../models/bullet.model';
+import { Page } from '../models/page/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class OrderService {
   }
 
   search() {
-    return this.http.get<Order[]>(`${this.baseUrl}/search`);
+    return this.http.get<Page>(`${this.baseUrl}/search`);
   }
 
 }
