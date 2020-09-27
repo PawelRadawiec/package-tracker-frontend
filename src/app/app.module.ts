@@ -31,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
     OrderHistoryDialogComponent,
     OrderListComponent,
     AsideComponent,
-    SearchFormComponent
+    SearchFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

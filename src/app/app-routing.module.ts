@@ -7,6 +7,7 @@ import { OrderResolver } from './resolvers/order.rsolver';
 import { BulletResolver } from './resolvers/bullet.resolver';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderListResolver } from './resolvers/order-list.resolver';
+import { LoginComponent } from './components/login/login.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
     path: 'list',
     component: OrderListComponent,
     resolve: [OrderListResolver]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 
