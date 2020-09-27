@@ -32,6 +32,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { AsideComponent } from './components/aside/aside.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthorizatonState } from './store/authorization/authorization.state';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { LoginComponent } from './components/login/login.component';
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
-      OrderState
+      OrderState,
+      AuthorizatonState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()

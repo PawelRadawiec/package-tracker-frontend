@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SigninRequest } from 'src/app/store/authorization/authroziatoin.actions';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
+    this.store.dispatch(new SigninRequest(this.loginForm.value));
   }
 
 }
