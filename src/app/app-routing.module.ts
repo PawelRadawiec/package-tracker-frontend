@@ -8,31 +8,36 @@ import { BulletResolver } from './resolvers/bullet.resolver';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderListResolver } from './resolvers/order-list.resolver';
 import { LoginComponent } from './components/login/login.component';
+import { AuthorizationGuard } from './guards/authorization.guard';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'order',
+    redirectTo: 'list',
     pathMatch: 'full'
   },
   {
     path: 'order',
-    component: OrderFormComponent
+    component: OrderFormComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'status/:id/:code',
     component: OrderStatusComponent,
-    resolve: [OrderResolver, BulletResolver]
+    resolve: [OrderResolver, BulletResolver],
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'list',
     component: OrderListComponent,
-    resolve: [OrderListResolver]
+    resolve: [OrderListResolver],
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'login',
@@ -46,7 +51,8 @@ const routes: Routes = [
   providers: [
     OrderResolver,
     BulletResolver,
-    OrderListResolver
+    OrderListResolver,
+    AuthorizationGuard
   ]
 })
 export class AppRoutingModule { }

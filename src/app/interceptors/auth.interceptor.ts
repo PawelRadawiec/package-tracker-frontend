@@ -11,6 +11,7 @@ export class AuthInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         let authReq = req;
         const token = this.token.getToken();
+        console.log('authReq: ', authReq);
         if (token != null) {
             authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
         }

@@ -1,4 +1,4 @@
-export class LoginResponse {
+export class SystemUserAuthorizationInfo {
     id: number;
     username: string;
     email: string;

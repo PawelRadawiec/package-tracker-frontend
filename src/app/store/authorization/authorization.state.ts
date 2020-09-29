@@ -1,13 +1,16 @@
 import { State, Selector, Action, StateContext, Store, Actions } from '@ngxs/store';
 import { AuthorizationService } from 'src/app/service/authorization.service';
-import { SigninRequest, AuthFaild, SigninResponse } from './authroziatoin.actions';
+import { SigninRequest, AuthFaild, SigninResponse, LogoutRequest } from './authroziatoin.actions';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { LoginResponse } from 'src/app/models/login-response.model';
+import { SystemUserAuthorizationInfo } from 'src/app/models/login-response.model';
 import { Injectable } from '@angular/core';
+import { TokenStorageService } from 'src/app/service/token-storage.service';
+import { Navigate } from '@ngxs/router-plugin';
+import * as _ from 'lodash';
 
 export interface AuthorizationStateModel {
-    systemUserAuthInfo: LoginResponse;
+    systemUserAuthInfo: SystemUserAuthorizationInfo;
 }
 
 @State<AuthorizationStateModel>({
@@ -20,6 +23,7 @@ export interface AuthorizationStateModel {
 export class AuthorizatonState {
     constructor(
         private store: Store,
+        private tokenService: TokenStorageService,
         private authorizationService: AuthorizationService
     ) {
     }
@@ -39,9 +43,18 @@ export class AuthorizatonState {
 
     @Action(SigninResponse)
     loginResponse(state: StateContext<AuthorizationStateModel>, action: SigninResponse) {
+        const authInfo = _.cloneDeep(action.response);
         state.patchState({
-            systemUserAuthInfo: action.response
+            systemUserAuthInfo: authInfo
         });
+        this.tokenService.saveToken(authInfo.token);
+        this.store.dispatch(new Navigate(['list']));
+    }
+
+    @Action(LogoutRequest)
+    logoutRequest(state: StateContext<AuthorizationStateModel>, action: LogoutRequest) {
+        this.tokenService.signOut();
+        window.location.reload();
     }
 
 }
