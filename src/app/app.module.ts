@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { NgxsModule } from '@ngxs/store';
@@ -31,6 +32,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthorizatonState } from './store/authorization/authorization.state';
+import { authInterceptorProviders } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -45,7 +49,8 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
     OrderHistoryDialogComponent,
     OrderListComponent,
     AsideComponent,
-    SearchFormComponent
+    SearchFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -66,12 +71,14 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
-      OrderState
+      OrderState,
+      AuthorizatonState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsRouterPluginModule.forRoot()
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
