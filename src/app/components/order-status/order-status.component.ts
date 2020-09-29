@@ -1,11 +1,17 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
+import { Subscription } from 'rxjs';
+import { Order } from 'src/app/models/order.model';
+import { OrderState } from 'src/app/store/order/order.state';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderHelper } from 'src/app/helper/order-helper';
+import { Bullet } from 'src/app/models/bullet.model';
+
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import { Subscription, Observable } from 'rxjs';
-import { Order } from 'src/app/models/order.model';
-import { Select } from '@ngxs/store';
-import { OrderState } from 'src/app/store/order/order.state';
-import { MatStepper } from '@angular/material/stepper';
+import { Store } from '@ngxs/store';
+import { GetOrderHistoryRequest } from 'src/app/store/order/order.actions';
+
 
 @Component({
   selector: 'app-order-status',
@@ -14,35 +20,29 @@ import { MatStepper } from '@angular/material/stepper';
 })
 export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('stepper') stepper: MatStepper;
-  @Select(OrderState.getOrder) order$: Observable<Order>;
-
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    'code',
-    'status',
-    'statusColor'
-  ];
-  stompClient: any;
-  currentIndexStep: number;
-  order: Order;
-  orders: Order[] = [];
-
   private subscriptions: Subscription[] = [];
+  bullets: Bullet[] = [];
+  currentIndexStep: number;
+  stompClient: any;
+  order: Order;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(
+    private store: Store,
+    private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private orderHelper: OrderHelper
+  ) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.order$.subscribe(order => {
-      if (order) {
-        this.order = order;
-      }
-    }));
+    this.subscriptions.push(
+      this.store.select(OrderState.getOrder).subscribe(order => this.handleOrderSubscription(order)),
+      this.store.select(OrderState.bullets).subscribe(bullets => this.handleBulletsSubscription(bullets))
+    );
     this.setWebSocketConntection();
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe);
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   ngAfterViewInit() {
@@ -50,64 +50,55 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  setWebSocketConntection() {
-    const ws = new SockJS('http://localhost:8080/ws');
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, () => {
-      that.subscribeOrder();
-    });
+  handleOrderSubscription(order: Order) {
+    if (order) {
+      this.order = order;
+    }
   }
 
-  subscribeOrder() {
-    const topic = `/topic/package`;
+  handleBulletsSubscription(bullets: Bullet[]) {
+    if (Array.isArray(bullets)) {
+      this.bullets = bullets;
+    }
+  }
+
+  setWebSocketConntection() {
+    this.stompClient = Stomp.over(new SockJS('http://localhost:8080/ws'));
+    this.stompClient.connect({}, () => this.handleConnection());
+  }
+
+  handleConnection() {
     this.subscriptions.push(
-      this.stompClient.subscribe(topic, (order) => {
-        const messageResult = JSON.parse(order.body);
-        this.orders.push(messageResult);
-        this.orders = [...this.orders];
-        this.sortOrders();
-        if (Array.isArray(this.orders) && this.orders.length > 0) {
-          const lastOrder = this.orders[this.orders.length - 1];
-          this.setStepperSelectedIndex(lastOrder.status);
-        }
-      })
+      this.stompClient.subscribe(
+        `/topic/message.${this.order.code}`,
+        (order: { body: string; }) => this.updateBullet(JSON.parse(order.body))
+      )
     );
   }
 
-  sortOrders() {
-    this.orders = this.orders.sort((a, b) => a.id - b.id);
-  }
-
-  nextStep() {
-    this.stepper.next();
-  }
-
-  isStepActive(status: string) {
-    return this.getStatusStepperIndex(status) < this.currentIndexStep;
+  updateBullet(messageResult: Order) {
+    const bullet = this.bullets.find(b => b.code === messageResult.status);
+    if (bullet) {
+      bullet.done = true;
+      this.bullets[this.bullets.indexOf(bullet)] = bullet;
+      this.setStepperSelectedIndex(bullet.code);
+    }
   }
 
   setStepperSelectedIndex(status: string) {
-    const index = this.getStatusStepperIndex(status);
+    const index = this.orderHelper.getStatusStepperIndex(status);
     this.currentIndexStep = index;
     if (index !== 0) {
       this.stepper.selectedIndex = index;
     }
   }
 
-  getStatusStepperIndex(status: string): number {
-    switch (status) {
-      case 'WAREHOUSE':
-        return 1;
-      case 'SORTING_PLANT':
-        return 2;
-      case 'TRANSPORT':
-        return 3;
-      case 'PARCEL_LOCKER':
-        return 4;
-      default:
-        return 0;
-    }
+  openHistory() {
+    this.store.dispatch(new GetOrderHistoryRequest(this.order.id));
+  }
+
+  nextStep() {
+    this.stepper.next();
   }
 
 }

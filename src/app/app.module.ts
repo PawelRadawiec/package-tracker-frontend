@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
-import { MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +25,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OrderState } from './store/order/order.state';
+import { OrderHistoryDialogComponent } from './components/order-history-dialog/order-history-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { AsideComponent } from './components/aside/aside.component';
+import { SearchFormComponent } from './components/search-form/search-form.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthorizatonState } from './store/authorization/authorization.state';
+import { authInterceptorProviders } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -34,7 +45,12 @@ import { OrderState } from './store/order/order.state';
     HomeComponent,
     NavbarComponent,
     OrderFormComponent,
-    OrderStatusComponent
+    OrderStatusComponent,
+    OrderHistoryDialogComponent,
+    OrderListComponent,
+    AsideComponent,
+    SearchFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,14 +66,19 @@ import { OrderState } from './store/order/order.state';
     MatCardModule,
     BrowserAnimationsModule,
     MatStepperModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
-      OrderState
+      OrderState,
+      AuthorizatonState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsRouterPluginModule.forRoot()
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

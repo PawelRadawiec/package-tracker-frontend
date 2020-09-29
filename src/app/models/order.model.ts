@@ -25,6 +25,7 @@ export class OrderHistory {
     code: string;
     status: string;
     statusColor: string;
+    createdAt: string;
 
     constructor(props = {}) {
         Object.assign(this, props);
