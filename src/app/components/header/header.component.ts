@@ -28,4 +28,6 @@ export class HeaderComponent implements OnInit {
     this.store.dispatch(new LogoutRequest(this.authInfo));
   }
 
+
+
 }

@@ -7,7 +7,7 @@
     <span class="dot" [style.background-color]="'YELLOW'"></span>
     <span class="dot" [style.background-color]="'GREEN'"></span>
     <span class="dot" [style.background-color]="'ORANGE'"></span>
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto" *ngIf="authInfo?.token">
       <li class="nav-item">
         <a href class="nav-link" (click)="logout()">LogOut</a>
       </li>
