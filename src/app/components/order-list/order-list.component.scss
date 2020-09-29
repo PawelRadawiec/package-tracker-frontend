@@ -9,3 +9,9 @@
 .content > mat-card {
     width: 200px;
 }
+
+::ng-deep .mat-card {
+    background-color: #292b2c;
+    border: 1px solid #e39300;
+    color: #e39300;
+}

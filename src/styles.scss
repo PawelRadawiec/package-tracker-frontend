@@ -5,7 +5,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: white;
+    background-color: #292b2c;
+    // background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
 }
 
 .grid-container {
@@ -19,6 +20,7 @@ body {
   app-header {
     grid-area: header;
     text-align: left;
+    background-color:black;
   }
   
   app-home,
@@ -62,3 +64,5 @@ body {
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

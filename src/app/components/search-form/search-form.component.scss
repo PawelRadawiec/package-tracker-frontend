@@ -3,8 +3,36 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-}
+    
+}   
 
 .search-input {
     margin-right: 10px;
 }
+
+::ng-deep.mat-form-field-label {
+    color: #e39300 !important;
+}
+
+::ng-deep .mat-select-arrow {
+    color: #e39300 !important;
+}
+  
+::ng-deep.mat-form-field-underline {
+    background-color: #e39300 !important;
+} 
+  
+::ng-deep.mat-form-field-ripple {
+   background-color: #e39300 !important;
+}
+
+::ng-deep input.mat-input-element {
+    color: #e39300 !important;
+}
+
+::ng-deep.not-empty-select.mat-selected {
+    color: #e39300  !important;
+}
+
+
+
