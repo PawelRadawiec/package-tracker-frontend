@@ -5,7 +5,8 @@
 
 .login-box {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #f0f0f0;
+    background-color: #292b2c;
+    border: 1px solid #e39300;
     margin-top: 8%;
     margin-left: 30%;   
     width: 40%;
@@ -14,4 +15,20 @@
 
 .login-input {
     width: 20vw;
+}
+
+::ng-deep.mat-form-field-label {
+    color: #e39300 !important;
+}
+  
+::ng-deep.mat-form-field-underline {
+    background-color: #e39300 !important;
+} 
+  
+::ng-deep.mat-form-field-ripple {
+   background-color: #e39300 !important;
+}
+
+::ng-deep input.mat-input-element {
+    color: #e39300 !important;
 }
