@@ -4,14 +4,15 @@ import { Order, OrderHistory } from '../models/order.model';
 import { Bullet } from '../models/bullet.model';
 import { Page } from '../models/page/page.model';
 import { OrderListRequest } from '../models/order-list-request.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  private baseUrl = 'http://localhost:8080/order';
-  private bulletUrl = 'http://localhost:8080/bullet';
+  private baseUrl = environment.baseUrl + 'order';
+  private bulletUrl = environment.baseUrl + 'bullet';
 
   constructor(private http: HttpClient) { }
 
