@@ -35,6 +35,8 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
 import { LoginComponent } from './components/login/login.component';
 import { AuthorizatonState } from './store/authorization/authorization.state';
 import { authInterceptorProviders } from './interceptors/auth.interceptor';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { SystemUserState } from './store/system-user/system-user.state';
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { authInterceptorProviders } from './interceptors/auth.interceptor';
     OrderListComponent,
     AsideComponent,
     SearchFormComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { authInterceptorProviders } from './interceptors/auth.interceptor';
     HttpClientModule,
     NgxsModule.forRoot([
       OrderState,
+      SystemUserState,
       AuthorizatonState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
