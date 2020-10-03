@@ -1,5 +1,5 @@
 
-import { State, Action, StateContext, Store } from '@ngxs/store';
+import { State, Action, StateContext, Store, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { SystemUser } from 'src/app/models/system-user.model';
 import { SystemUserService } from 'src/app/service/system-user.service';
@@ -9,12 +9,14 @@ import { of } from 'rxjs';
 
 export interface SystemUserStateModel {
     user: SystemUser;
+    registerLoading: boolean;
 }
 
 @State<SystemUserStateModel>({
     name: 'systemUser',
     defaults: {
-        user: null
+        user: null,
+        registerLoading: false
     }
 })
 
@@ -26,19 +28,34 @@ export class SystemUserState {
     ) {
     }
 
+    @Selector()
+    static registerLoading(state: SystemUserStateModel) {
+        return state.registerLoading;
+    }
 
     @Action(RegistrationRequest)
     registrationRequest(context: StateContext<SystemUserStateModel>, action: RegistrationRequest) {
+        context.patchState({
+            registerLoading: true
+        });
         return this.systemUserService.registration(action.request).pipe(
             mergeMap(respone => this.store.dispatch(new RegistrationResponse(respone))),
-            catchError(reject => of(new SystemUserFail()))
+            catchError(reject => this.store.dispatch(new SystemUserFail(reject)))
         );
     }
 
     @Action(RegistrationResponse)
     registrationResponse(context: StateContext<SystemUserStateModel>, action: RegistrationResponse) {
         context.patchState({
-            user: action.response
+            user: action.response,
+            registerLoading: false
+        });
+    }
+
+    @Action(SystemUserFail)
+    systemUserFailure(context: StateContext<SystemUserStateModel>, action: SystemUserFail) {
+        context.patchState({
+            registerLoading: false
         });
     }
 

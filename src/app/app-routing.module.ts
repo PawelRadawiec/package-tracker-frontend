@@ -9,6 +9,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { OrderListResolver } from './resolvers/order-list.resolver';
 import { LoginComponent } from './components/login/login.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
     path: 'order',
     component: OrderFormComponent,
     canActivate: [AuthorizationGuard]
+  },
+  {
+    path: 'registration',
+    component: RegistrationFormComponent
   },
   {
     path: 'status/:id/:code',

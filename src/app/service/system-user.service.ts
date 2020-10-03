@@ -8,14 +8,14 @@ import { SystemUser } from '../models/system-user.model';
 })
 export class SystemUserService {
 
-  private baseUrl = environment.baseUrl + 'system-user';
+  private baseUrl = environment.baseUrl + 'user';
 
   constructor(
     private http: HttpClient
   ) { }
 
   registration(request: SystemUser) {
-    return this.http.post<SystemUser>(`${this.baseUrl}/system-user/registration`, request);
+    return this.http.post<SystemUser>(`${this.baseUrl}/registration`, request);
   }
 
 }
