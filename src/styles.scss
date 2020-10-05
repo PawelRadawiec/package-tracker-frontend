@@ -1,5 +1,6 @@
  
 @import "~bootstrap/dist/css/bootstrap.css";
+@import '~material-icons/iconfont/material-icons.css';
 
 body {
     margin: 0;
@@ -19,8 +20,6 @@ body {
 
   app-header {
     grid-area: header;
-    text-align: left;
-    background-color:black;
   }
   
   app-home,

@@ -5,7 +5,7 @@ import { SystemUser } from 'src/app/models/system-user.model';
 import { SystemUserService } from 'src/app/service/system-user.service';
 import { RegistrationRequest, RegistrationResponse, SystemUserFail } from './syste-user.actions';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { of, from } from 'rxjs';
+import { from } from 'rxjs';
 import { SetErrorMap } from '../error/error.actions';
 
 export interface SystemUserStateModel {

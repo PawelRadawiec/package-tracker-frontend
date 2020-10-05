@@ -1,8 +1,37 @@
+.system-header {
+  border-bottom: 2px solid #e39300;
+  margin-top: 5px;
+  height: 40px;
+}
+
+.dots {
+  margin-top: 10px;
+}
+
 .dot {
     height: 15px;
     width: 15px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 5px;
+  }
+
+  .icon {
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #e39300;
+  }
+
+  .tracker {
+    color: #e39300;
+    font-size: large;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .option {
+    margin-right: 5px;
+    margin-bottom: 5px;
   }
   

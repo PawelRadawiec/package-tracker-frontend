@@ -1,22 +1,28 @@
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div>
-      <a href="" class="navbar-brand"> <i class="fa fa-check-circle-o" aria-hidden="true"></i>Tracker</a>
-    </div>
+<div class="system-header" fxLayout="row" fxLayoutAlign="start start">
+  <div class="dots" fxLayoutAlign="start start" fxFlex>
+    <span class="tracker">Tracker</span>
     <span class="dot" [style.background-color]="'BLUE'"></span>
     <span class="dot" [style.background-color]="'YELLOW'"></span>
     <span class="dot" [style.background-color]="'GREEN'"></span>
     <span class="dot" [style.background-color]="'ORANGE'"></span>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!tokenStorage.tokenExist()">
-        <a href class="nav-link" [routerLink]="['/login']">sign in</a>
-      </li>
-      <li class="nav-item" *ngIf="tokenStorage.tokenExist()">
-        <a href class="nav-link" (click)="logout()">sign out</a>
-      </li>
-      <li class="nav-item" *ngIf="!tokenStorage.tokenExist()">
-        <a href class="nav-link" [routerLink]="['/registration']">register</a>
-      </li>
-    </ul>
-  </nav>
-</header>
+  </div>
+
+  <div class="options" *ngIf="tokenStorage.tokenExist()" fxLayoutAlign="center start" fxFlex>
+    <span class="material-icons icon">list</span>
+    <span class="material-icons icon">card_giftcard</span>
+    <span class="material-icons icon">card_giftcard</span>
+    <span class="material-icons icon">card_giftcard</span>
+  </div>
+
+  <div fxLayoutAlign="end start" fxFlex>
+    <div class="option" *ngIf="tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" (click)="logout()">Sign out</button>
+    </div>
+    <div class="option" *ngIf="!tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" routerLink="/login">Sign in</button>
+    </div>
+    <div class="option" *ngIf="!tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" routerLink="/registration">Create account</button>
+    </div>
+  </div>
+</div>
