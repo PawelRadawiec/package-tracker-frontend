@@ -37,6 +37,7 @@ import { AuthorizatonState } from './store/authorization/authorization.state';
 import { authInterceptorProviders } from './interceptors/auth.interceptor';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { SystemUserState } from './store/system-user/system-user.state';
+import { ErrorState } from './store/error/error.state';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { SystemUserState } from './store/system-user/system-user.state';
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
+      ErrorState,
       OrderState,
       SystemUserState,
       AuthorizatonState

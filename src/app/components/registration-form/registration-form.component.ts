@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss']
+  styleUrls: ['./registration-form.component.scss'],
+  providers: [ErrorService]
 })
 export class RegistrationFormComponent implements OnInit {
   @Select(SystemUserState.registerLoading) registerLoading$: Observable<boolean>;

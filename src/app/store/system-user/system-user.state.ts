@@ -5,7 +5,8 @@ import { SystemUser } from 'src/app/models/system-user.model';
 import { SystemUserService } from 'src/app/service/system-user.service';
 import { RegistrationRequest, RegistrationResponse, SystemUserFail } from './syste-user.actions';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
+import { SetErrorMap } from '../error/error.actions';
 
 export interface SystemUserStateModel {
     user: SystemUser;
@@ -40,7 +41,10 @@ export class SystemUserState {
         });
         return this.systemUserService.registration(action.request).pipe(
             mergeMap(respone => this.store.dispatch(new RegistrationResponse(respone))),
-            catchError(reject => this.store.dispatch(new SystemUserFail(reject)))
+            catchError(reject => from([
+                this.store.dispatch(new SystemUserFail(reject)),
+                this.store.dispatch(new SetErrorMap(reject.error))
+            ]))
         );
     }
 

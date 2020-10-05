@@ -9,7 +9,8 @@ import { ErrorService } from 'src/app/service/error.service';
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
-  styleUrls: ['./order-form.component.scss']
+  styleUrls: ['./order-form.component.scss'],
+  providers: [ErrorService]
 })
 export class OrderFormComponent implements OnInit {
   @Select(OrderState.startLoading) startLoading$: Observable<boolean>;
