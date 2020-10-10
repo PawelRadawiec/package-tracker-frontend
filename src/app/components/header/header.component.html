@@ -8,10 +8,10 @@
   </div>
 
   <div class="options" *ngIf="tokenStorage.tokenExist()" fxLayoutAlign="center start" fxFlex>
-    <span class="material-icons icon">list</span>
-    <span class="material-icons icon">card_giftcard</span>
-    <span class="material-icons icon">card_giftcard</span>
-    <span class="material-icons icon">card_giftcard</span>
+    <a class="material-icons icon" routerLink="/search">search</a>
+    <a class="material-icons icon" routerLink="/list">list</a>
+    <a class="material-icons icon" routerLink="/order">add_box</a>
+    <a class="material-icons icon" routerLink="/account">account_box</a>
   </div>
 
   <div fxLayoutAlign="end start" fxFlex>
