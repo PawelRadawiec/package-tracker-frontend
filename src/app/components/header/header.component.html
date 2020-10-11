@@ -8,21 +8,45 @@
   </div>
 
   <div class="options" *ngIf="tokenStorage.tokenExist()" fxLayoutAlign="center start" fxFlex>
-    <a class="material-icons icon" routerLink="/search">search</a>
-    <a class="material-icons icon" routerLink="/list">list</a>
-    <a class="material-icons icon" routerLink="/order">add_box</a>
-    <a class="material-icons icon" routerLink="/account">account_box</a>
+    <mat-tab-group [(selectedIndex)]="selectedIndex">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <a class="material-icons icon" routerLink="/search">search</a>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <a class="material-icons icon" routerLink="/list">list</a>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <a class="material-icons icon" routerLink="/order">add_box</a>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <a class="material-icons icon" routerLink="/account">account_box</a>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 
   <div fxLayoutAlign="end start" fxFlex>
     <div class="option" *ngIf="tokenStorage.tokenExist()">
-      <button type="button" class="btn btn-link text-muted" (click)="logout()">Sign out</button>
+      <button type="button" class="btn btn-link text-muted" (click)="logout()">
+        <span class="button-text">Logout</span>
+      </button>
     </div>
     <div class="option" *ngIf="!tokenStorage.tokenExist()">
-      <button type="button" class="btn btn-link text-muted" routerLink="/login">Sign in</button>
+      <button type="button" class="btn btn-link text-muted" routerLink="/login">
+        <span class="button-text">Login</span>
+      </button>
     </div>
     <div class="option" *ngIf="!tokenStorage.tokenExist()">
-      <button type="button" class="btn btn-link text-muted" routerLink="/registration">Create account</button>
+      <button type="button" class="btn btn-link text-muted" routerLink="/registration">
+        <span class="button-text">Register</span>
+      </button>
     </div>
   </div>
 </div>

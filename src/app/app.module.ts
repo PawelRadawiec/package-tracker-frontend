@@ -21,6 +21,7 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { OrderStatusComponent } from './components/order-status/order-status.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
@@ -72,6 +73,7 @@ import { ErrorState } from './store/error/error.state';
     MatStepperModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatTabsModule,
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([

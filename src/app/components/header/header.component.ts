@@ -14,6 +14,7 @@ import { TokenStorageService } from 'src/app/service/token-storage.service';
 export class HeaderComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   authInfo: SystemUserAuthorizationInfo;
+  selectedIndex: number;
 
   constructor(
     private store: Store,
@@ -26,10 +27,28 @@ export class HeaderComponent implements OnInit {
         authInfo => this.authInfo = authInfo
       )
     );
+    this.setTabIndex();
   }
 
   logout() {
     this.store.dispatch(new LogoutRequest(this.authInfo));
+  }
+
+  private setTabIndex() {
+    switch (location.pathname) {
+      case '/search':
+        this.selectedIndex = 0;
+        break;
+      case '/list':
+        this.selectedIndex = 1;
+        break;
+      case '/order':
+        this.selectedIndex = 2;
+        break;
+      case '/account':
+        this.selectedIndex = 4;
+        break;
+    }
   }
 
 }

@@ -29,6 +29,7 @@
     "@angular/platform-browser": "~10.0.0-rc.2",
     "@angular/platform-browser-dynamic": "~10.0.0-rc.2",
     "@angular/router": "~10.0.0-rc.2",
+    "@material/tabs": "^2.3.0",
     "@ngxs/devtools-plugin": "^3.6.2",
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/router-plugin": "^3.7.0",
