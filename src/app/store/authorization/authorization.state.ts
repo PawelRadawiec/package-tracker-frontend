@@ -2,12 +2,13 @@ import { State, Selector, Action, StateContext, Store, Actions } from '@ngxs/sto
 import { AuthorizationService } from 'src/app/service/authorization.service';
 import { SigninRequest, AuthFaild, SigninResponse, LogoutRequest } from './authroziatoin.actions';
 import { mergeMap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { from } from 'rxjs';
 import { SystemUserAuthorizationInfo } from 'src/app/models/login-response.model';
 import { Injectable } from '@angular/core';
 import { TokenStorageService } from 'src/app/service/token-storage.service';
 import { Navigate } from '@ngxs/router-plugin';
 import * as _ from 'lodash';
+import { SetErrorMap } from '../error/error.actions';
 
 export interface AuthorizationStateModel {
     systemUserAuthInfo: SystemUserAuthorizationInfo;
@@ -37,7 +38,10 @@ export class AuthorizatonState {
     loginRequest(state: StateContext<AuthorizationStateModel>, action: SigninRequest) {
         return this.authorizationService.login(action.request).pipe(
             mergeMap(response => this.store.dispatch(new SigninResponse(response))),
-            catchError((reject) => of(new AuthFaild(reject)))
+            catchError((reject) => from([
+                this.store.dispatch(new AuthFaild(reject)),
+                this.store.dispatch(new SetErrorMap(reject.error, reject)),
+            ]))
         );
     }
 

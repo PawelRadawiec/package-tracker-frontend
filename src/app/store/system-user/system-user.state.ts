@@ -43,7 +43,7 @@ export class SystemUserState {
             mergeMap(respone => this.store.dispatch(new RegistrationResponse(respone))),
             catchError(reject => from([
                 this.store.dispatch(new SystemUserFail(reject)),
-                this.store.dispatch(new SetErrorMap(reject.error))
+                this.store.dispatch(new SetErrorMap(reject.error, reject))
             ]))
         );
     }

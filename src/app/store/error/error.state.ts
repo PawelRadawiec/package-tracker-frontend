@@ -28,8 +28,15 @@ export class ErrorState {
 
     @Action(SetErrorMap)
     setErrors(context: StateContext<ErrorModel>, action: SetErrorMap) {
+        let errroMap = new Map<string, string>();
+        if (action.reject.status === 401) {
+            errroMap = new Map<string, string>();
+            errroMap.set('401', '401 status');
+        } else {
+            errroMap = new Map<string, string>(action.errors);
+        }
         context.patchState({
-            errors: action.errors
+            errors: errroMap
         });
     }
 

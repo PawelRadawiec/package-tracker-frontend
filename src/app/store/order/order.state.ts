@@ -95,7 +95,7 @@ export class OrderState {
                 this.store.dispatch(new StartOrder(response));
             }),
             catchError(reject => from([
-                this.store.dispatch(new SetErrorMap(reject.error)),
+                this.store.dispatch(new SetErrorMap(reject.error, reject)),
                 this.store.dispatch(new OrderRequestFailure(reject.error))
             ]))
         );

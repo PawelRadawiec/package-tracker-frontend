@@ -22,12 +22,19 @@ export class ErrorService implements OnDestroy {
 
   private handleErrorsSubscription(errorsMap: Map<string, string>) {
     this.errorsMap = errorsMap;
-    for (const [key, value] of Object.entries(this.errorsMap)) {
+    if (!this.form) {
+      return;
+    }
+    for (const key of this.errorsMap.keys()) {
       const formControl = this.form.get(key);
       if (formControl) {
-        formControl.setErrors({ serverError: value });
+        formControl.setErrors({ serverError: this.errorsMap.get(key) });
       }
     }
+  }
+
+  hasStatus(status: string): boolean {
+    return ![null, undefined].includes(this.errorsMap) && this.errorsMap.has(status);
   }
 
   hasError(field: string): boolean {
