@@ -14,6 +14,8 @@ import {
 } from './order.actions';
 import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
 import { Page } from 'src/app/models/page/page.model';
+import { SetErrorMap } from '../error/error.actions';
+import { from } from 'rxjs';
 
 export interface OrderStateModel {
     order: Order;
@@ -92,10 +94,10 @@ export class OrderState {
                 this.router.navigate([`status/${response.id}/${response.code}`]);
                 this.store.dispatch(new StartOrder(response));
             }),
-            catchError(error => {
-                console.log('Error occur: ', error);
-                return this.store.dispatch(new OrderRequestFailure(error.error));
-            })
+            catchError(reject => from([
+                this.store.dispatch(new SetErrorMap(reject.error, reject)),
+                this.store.dispatch(new OrderRequestFailure(reject.error))
+            ]))
         );
     }
 

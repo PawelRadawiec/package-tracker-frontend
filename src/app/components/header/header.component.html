@@ -1,16 +1,28 @@
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div>
-      <a href="" class="navbar-brand"> <i class="fa fa-check-circle-o" aria-hidden="true"></i>Tracker</a>
-    </div>
+<div class="system-header" fxLayout="row" fxLayoutAlign="start start">
+  <div class="dots" fxLayoutAlign="start start" fxFlex>
+    <span class="tracker">Tracker</span>
     <span class="dot" [style.background-color]="'BLUE'"></span>
     <span class="dot" [style.background-color]="'YELLOW'"></span>
     <span class="dot" [style.background-color]="'GREEN'"></span>
     <span class="dot" [style.background-color]="'ORANGE'"></span>
-    <ul class="navbar-nav ml-auto" *ngIf="authInfo?.token">
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav>
-</header>
+  </div>
+
+  <div class="options" *ngIf="tokenStorage.tokenExist()" fxLayoutAlign="center start" fxFlex>
+    <a class="material-icons icon" routerLink="/search">search</a>
+    <a class="material-icons icon" routerLink="/list">list</a>
+    <a class="material-icons icon" routerLink="/order">add_box</a>
+    <a class="material-icons icon" routerLink="/account">account_box</a>
+  </div>
+
+  <div fxLayoutAlign="end start" fxFlex>
+    <div class="option" *ngIf="tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" (click)="logout()">Sign out</button>
+    </div>
+    <div class="option" *ngIf="!tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" routerLink="/login">Sign in</button>
+    </div>
+    <div class="option" *ngIf="!tokenStorage.tokenExist()">
+      <button type="button" class="btn btn-link text-muted" routerLink="/registration">Create account</button>
+    </div>
+  </div>
+</div>

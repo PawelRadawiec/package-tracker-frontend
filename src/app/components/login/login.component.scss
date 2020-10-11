@@ -3,15 +3,40 @@
     text-align: center;
 }  
 
+
 .login-box {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #f0f0f0;
-    margin-top: 8%;
-    margin-left: 30%;   
-    width: 40%;
+    background-color: #292b2c;
+    border: 1px solid #e39300;
+    width: auto;
     padding: 40px;
 }
 
+.info-card {
+    background-color: #292b2c !important;
+    border: 1px solid #e39300;
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .login-input {
-    width: 20vw;
+    width: 30vw;
+}
+
+::ng-deep.mat-form-field-label {
+    color: #e39300 !important;
+}
+  
+::ng-deep.mat-form-field-underline {
+    background-color: #e39300 !important;
+} 
+  
+::ng-deep.mat-form-field-ripple {
+   background-color: #e39300 !important;
+}
+
+::ng-deep input.mat-input-element {
+    color: #e39300 !important;
 }

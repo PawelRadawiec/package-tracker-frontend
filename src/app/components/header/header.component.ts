@@ -4,6 +4,7 @@ import { LogoutRequest } from 'src/app/store/authorization/authroziatoin.actions
 import { Subscription } from 'rxjs';
 import { AuthorizatonState } from 'src/app/store/authorization/authorization.state';
 import { SystemUserAuthorizationInfo } from 'src/app/models/login-response.model';
+import { TokenStorageService } from 'src/app/service/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,10 @@ export class HeaderComponent implements OnInit {
   private subscriptions: Subscription[] = [];
   authInfo: SystemUserAuthorizationInfo;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    public tokenStorage: TokenStorageService
+  ) { }
 
   ngOnInit() {
     this.subscriptions.push(
@@ -27,7 +31,5 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.store.dispatch(new LogoutRequest(this.authInfo));
   }
-
-
 
 }

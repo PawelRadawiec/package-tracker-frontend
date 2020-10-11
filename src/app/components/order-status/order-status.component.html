@@ -1,13 +1,11 @@
-<div class="container status-stepper">
-    <button mat-raised-button color="primary" (click)="openHistory()">Show history</button>
-    <mat-horizontal-stepper [linear]="false" #stepper>
-        <mat-step [completed]="bullet.done" *ngFor="let bullet of bullets">
-            <ng-template matStepLabel>{{bullet.header}}</ng-template>
-            <mat-card class="info-card">
-                <mat-card-header>
-                    <mat-card-subtitle>{{bullet.content}}</mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </mat-step>
-    </mat-horizontal-stepper>
-</div>
+<button mat-raised-button color="primary" (click)="openHistory()">Show history</button>
+<mat-horizontal-stepper [linear]="false" #stepper>
+    <mat-step [completed]="bullet.done" *ngFor="let bullet of bullets">
+        <ng-template matStepLabel>{{bullet.header}}</ng-template>
+        <mat-card class="info-card">
+            <mat-card-header>
+                <mat-card-subtitle>{{bullet.content}}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </mat-step>
+</mat-horizontal-stepper>

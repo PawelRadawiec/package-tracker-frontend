@@ -1,32 +1,40 @@
-import { Injectable } from '@angular/core';
-import { OrderState } from '../store/order/order.state';
-import { Select } from '@ngxs/store';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ErrorState } from '../store/error/error.state';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ErrorService {
-  @Select(OrderState.orderErrorMap) errors$: Observable<Map<string, string>>;
+@Injectable()
+export class ErrorService implements OnDestroy {
   private errorsMap: Map<string, string>;
   private subscription: Subscription;
 
   public form: FormGroup;
 
-  constructor() {
-    this.subscription = this.errors$.subscribe(errors => this.handleErrorsSubscription(errors));
+  constructor(private store: Store) {
+    this.subscription = this.store.select(ErrorState.errorsMap).subscribe(errors => this.handleErrorsSubscription(errors));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   private handleErrorsSubscription(errorsMap: Map<string, string>) {
     this.errorsMap = errorsMap;
-    for (const [key, value] of Object.entries(this.errorsMap)) {
+    if (!this.form) {
+      return;
+    }
+    for (const key of this.errorsMap.keys()) {
       const formControl = this.form.get(key);
       if (formControl) {
-        formControl.setErrors({ serverError: value });
+        formControl.setErrors({ serverError: this.errorsMap.get(key) });
       }
     }
+  }
+
+  hasStatus(status: string): boolean {
+    return ![null, undefined].includes(this.errorsMap) && this.errorsMap.has(status);
   }
 
   hasError(field: string): boolean {
@@ -37,7 +45,7 @@ export class ErrorService {
     if (!this.form) {
       return false;
     }
-    return this.form.get(field).errors?.serverError;
+    return this.form.get(field)?.errors?.serverError;
   }
 
 }

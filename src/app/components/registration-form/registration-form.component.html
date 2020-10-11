@@ -1,0 +1,40 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="registration-form">
+        <div class="form-group">
+            <mat-form-field class="registration-input">
+                <mat-label>username</mat-label>
+                <input matInput placeholder="username" formControlName="username">
+                <mat-error *ngIf="errorService.hasError('username')">
+                    {{ errorService.getErrorMessage('username') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-form-field class="registration-input">
+                <mat-label>email</mat-label>
+                <input matInput placeholder="email" formControlName="email">
+                <mat-error *ngIf="errorService.hasError('email')">
+                    {{ errorService.getErrorMessage('email') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-form-field class="registration-input">
+                <mat-label>password</mat-label>
+                <input matInput type="password" placeholder="password" formControlName="password">
+                <mat-error *ngIf="errorService.hasError('password')">
+                    {{ errorService.getErrorMessage('password') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <div class="button-container">
+                <div class="spinner-container" *ngIf="registerLoading$ | async">
+                    <mat-spinner diameter="24"></mat-spinner>
+                </div>
+                <button mat-raised-button [disabled]="registerLoading$ | async" type="submit"
+                    color="primary">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
