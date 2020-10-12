@@ -39,6 +39,8 @@ import { authInterceptorProviders } from './interceptors/auth.interceptor';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { SystemUserState } from './store/system-user/system-user.state';
 import { ErrorState } from './store/error/error.state';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 
 @NgModule({
@@ -74,6 +76,7 @@ import { ErrorState } from './store/error/error.state';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTabsModule,
+    MatPaginatorModule,
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([

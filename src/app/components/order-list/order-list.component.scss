@@ -10,6 +10,19 @@
     width: 200px;
 }
 
+.paginator-section{
+    margin-top: 15px;
+    background-color: #292b2c;
+    border: 1px solid #e39300;
+    color: #e39300;
+}
+
+.example-header-image {
+    background-image: url('https://dinoanimals.pl/wp-content/uploads/2015/09/Kot_europejski_krotkowlosy_7.jpg');
+    background-size: cover;
+}
+
+
 ::ng-deep .mat-card {
     background-color: #292b2c;
     border: 1px solid #e39300;
