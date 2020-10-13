@@ -40,6 +40,9 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { SystemUserState } from './store/system-user/system-user.state';
 import { ErrorState } from './store/error/error.state';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SearchProductComponent } from './components/search-product/search-product.component';
+import { SearchProductFormComponent } from './components/search-product-form/search-product-form.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 
 
@@ -57,7 +60,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AsideComponent,
     SearchFormComponent,
     LoginComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    SearchProductComponent,
+    SearchProductFormComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,

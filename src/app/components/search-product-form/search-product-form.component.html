@@ -1,0 +1,20 @@
+<form [formGroup]="productForm" (ngSubmit)="search()">
+    <div class="form-group product-form">
+        <mat-form-field class="search-input">
+            <mat-label>Product name</mat-label>
+            <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="search-input">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category.type">
+                    {{category.typeDescription}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="button-container">
+            <button mat-raised-button type="submit" color="primary">Search</button>
+        </div>
+    </div>
+</form>

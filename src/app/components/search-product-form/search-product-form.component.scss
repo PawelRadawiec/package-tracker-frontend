@@ -1,5 +1,5 @@
 
-.order-form {
+.product-form {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -7,13 +7,6 @@
 
 .search-input {
     margin-right: 10px;
-}
-
-.title{
-    color: #e39300;
-    display: flex;
-    justify-content: center;
-    font-size: large;
 }
 
 ::ng-deep.mat-form-field-label {

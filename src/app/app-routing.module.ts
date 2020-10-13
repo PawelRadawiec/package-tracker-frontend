@@ -10,6 +10,7 @@ import { OrderListResolver } from './resolvers/order-list.resolver';
 import { LoginComponent } from './components/login/login.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { SearchProductComponent } from './components/search-product/search-product.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,11 @@ const routes: Routes = [
     path: 'list',
     component: OrderListComponent,
     resolve: [OrderListResolver],
+    canActivate: [AuthorizationGuard]
+  },
+  {
+    path: 'search',
+    component: SearchProductComponent,
     canActivate: [AuthorizationGuard]
   },
   {
