@@ -52,7 +52,7 @@ export class AuthorizatonState {
             systemUserAuthInfo: authInfo
         });
         this.tokenService.saveToken(authInfo.token);
-        this.store.dispatch(new Navigate(['list']));
+        this.store.dispatch(new Navigate(['menu']));
     }
 
     @Action(LogoutRequest)

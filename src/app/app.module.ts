@@ -43,6 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { SearchProductFormComponent } from './components/search-product-form/search-product-form.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { CardMenuComponent } from './components/card-menu/card-menu.component';
 
 
 
@@ -63,7 +64,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
     RegistrationFormComponent,
     SearchProductComponent,
     SearchProductFormComponent,
-    ProductListComponent
+    ProductListComponent,
+    CardMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
-    NgxsRouterPluginModule.forRoot()
+    NgxsRouterPluginModule.forRoot(),
+
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

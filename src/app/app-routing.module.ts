@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { SearchProductComponent } from './components/search-product/search-product.component';
+import { CardMenuComponent } from './components/card-menu/card-menu.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,13 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard]
   },
   {
-    path: 'list',
+    path: 'menu',
+    component: CardMenuComponent,
+    resolve: [OrderListResolver],
+    canActivate: [AuthorizationGuard]
+  },
+  {
+    path: 'orders',
     component: OrderListComponent,
     resolve: [OrderListResolver],
     canActivate: [AuthorizationGuard]

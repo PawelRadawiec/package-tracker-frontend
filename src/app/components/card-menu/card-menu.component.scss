@@ -1,0 +1,11 @@
+.menu-list {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20%;
+}
+
+::ng-deep .mat-card {
+    background-color: #3d4d55;
+    border: 1px solid #e39300;
+    color: #e39300;
+}
