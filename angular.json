@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "package-tracker-frontend"
+  "defaultProject": "package-tracker-frontend",
+  "cli": {
+    "analytics": "05b63f71-d589-4a0b-9fb1-0464b4334233"
+  }
 }
