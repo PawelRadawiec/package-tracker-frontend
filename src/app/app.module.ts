@@ -8,6 +8,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { HttpClientModule } from '@angular/common/http';
 import { MatStepperModule } from '@angular/material/stepper';
+import {MatBadgeModule} from '@angular/material/badge';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +45,7 @@ import { SearchProductComponent } from './components/search-product/search-produ
 import { SearchProductFormComponent } from './components/search-product-form/search-product-form.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
+import { ProductState } from './store/product/product.state';
 
 
 
@@ -85,11 +87,13 @@ import { CardMenuComponent } from './components/card-menu/card-menu.component';
     MatDialogModule,
     MatTabsModule,
     MatPaginatorModule,
+    MatBadgeModule,
     FlexLayoutModule,
     HttpClientModule,
     NgxsModule.forRoot([
       ErrorState,
       OrderState,
+      ProductState,
       SystemUserState,
       AuthorizatonState
     ]),

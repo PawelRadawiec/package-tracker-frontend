@@ -12,6 +12,7 @@ import { AuthorizationGuard } from './guards/authorization.guard';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
+import { ProductsResolver } from './resolvers/products.resolver';
 
 
 const routes: Routes = [
@@ -53,8 +54,9 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard]
   },
   {
-    path: 'search',
+    path: 'products/search',
     component: SearchProductComponent,
+    resolve: [ProductsResolver],
     canActivate: [AuthorizationGuard]
   },
   {
@@ -69,6 +71,7 @@ const routes: Routes = [
   providers: [
     OrderResolver,
     BulletResolver,
+    ProductsResolver,
     OrderListResolver,
     AuthorizationGuard
   ]
