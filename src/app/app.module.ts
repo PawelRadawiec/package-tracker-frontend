@@ -47,6 +47,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductState } from './store/product/product.state';
 import { BasketState } from './store/basket/basket.state';
+import { BasketModalComponent } from './components/basket-modal/basket-modal.component';
 
 
 
@@ -68,7 +69,8 @@ import { BasketState } from './store/basket/basket.state';
     SearchProductComponent,
     SearchProductFormComponent,
     ProductListComponent,
-    CardMenuComponent
+    CardMenuComponent,
+    BasketModalComponent
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,6 @@ export class CardMenuComponent implements OnInit {
   }
 
   list(type: string) {
-    console.log('type: ', type);
     let value = '';
     switch (type) {
       case 'ORDERS':

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { GetBasketByOwnerRequest } from 'src/app/store/basket/baset.actions';
 import { BasketState } from 'src/app/store/basket/basket.state';
 
 @Component({
@@ -25,6 +26,7 @@ export class SearchProductFormComponent implements OnInit {
   ];
 
   constructor(
+    private store: Store,
     private formBuilder: FormBuilder
   ) { }
 
@@ -33,6 +35,10 @@ export class SearchProductFormComponent implements OnInit {
   }
 
   search() {
+  }
+
+  getBasket() {
+    this.store.dispatch(new GetBasketByOwnerRequest());
   }
 
   initializeSerachForm() {

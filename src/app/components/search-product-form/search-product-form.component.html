@@ -17,7 +17,8 @@
             <button mat-raised-button type="submit" color="primary">Search</button>
         </div>
         <div class="button-container">
-            <button mat-stroked-button color="primary" [matBadge]="count$ | async" [matBadgeHidden]="hidden">Basket</button>
+            <button mat-stroked-button color="primary" [matBadge]="count$ | async"
+                [matBadgeHidden]="hidden" (click)="getBasket()">Basket</button>
         </div>
     </div>
 </form>
