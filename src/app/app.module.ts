@@ -46,6 +46,7 @@ import { SearchProductFormComponent } from './components/search-product-form/sea
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductState } from './store/product/product.state';
+import { BasketState } from './store/basket/basket.state';
 
 
 
@@ -93,6 +94,7 @@ import { ProductState } from './store/product/product.state';
     NgxsModule.forRoot([
       ErrorState,
       OrderState,
+      BasketState,
       ProductState,
       SystemUserState,
       AuthorizatonState

@@ -13,6 +13,7 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { SearchProductComponent } from './components/search-product/search-product.component';
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductsResolver } from './resolvers/products.resolver';
+import { BasketCountResolver } from './resolvers/basket-count.resolver';
 
 
 const routes: Routes = [
@@ -56,7 +57,7 @@ const routes: Routes = [
   {
     path: 'products/search',
     component: SearchProductComponent,
-    resolve: [ProductsResolver],
+    resolve: [ProductsResolver, BasketCountResolver],
     canActivate: [AuthorizationGuard]
   },
   {
@@ -73,6 +74,7 @@ const routes: Routes = [
     BulletResolver,
     ProductsResolver,
     OrderListResolver,
+    BasketCountResolver,
     AuthorizationGuard
   ]
 })

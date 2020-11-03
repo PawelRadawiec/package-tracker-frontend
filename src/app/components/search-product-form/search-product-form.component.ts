@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { BasketState } from 'src/app/store/basket/basket.state';
 
 @Component({
   selector: 'app-search-product-form',
@@ -7,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./search-product-form.component.scss']
 })
 export class SearchProductFormComponent implements OnInit {
-
+  @Select(BasketState.basketCount) count$: Observable<number>;
   productForm: FormGroup;
 
   categories = [
