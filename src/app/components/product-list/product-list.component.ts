@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngxs/store';
 import { Subscription } from 'rxjs';
+import { AddToBasketRequest } from 'src/app/models/add-to-basket-request.model';
+import { Basket } from 'src/app/models/basket.model';
 import { Product } from 'src/app/models/product.model';
+import { AddProductToBasketRequest } from 'src/app/store/basket/baset.actions';
+import { BasketState } from 'src/app/store/basket/basket.state';
 import { ProductState } from 'src/app/store/product/product.state';
 
 @Component({
@@ -12,21 +16,34 @@ import { ProductState } from 'src/app/store/product/product.state';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  private subscription: Subscription;
 
+  private subscriptions: Subscription[] = [];
+  private basket: Basket;
   products: Product[] = [];
 
   constructor(private store: Store) {
-    this.subscription = this.store.select(ProductState.products).subscribe(
-      products => this.products = products
-    );
+    this.subscriptions.push(
+      this.store.select(ProductState.products).subscribe(
+        products => this.products = products
+      ),
+      this.store.select(BasketState.basket).subscribe(basket => this.basket = basket)
+    )
   }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(item => item.unsubscribe());
+  }
+
+  addToBasket(product: Product) {
+    this.store.dispatch(new AddProductToBasketRequest(
+      new AddToBasketRequest({
+        basket: this.basket,
+        product
+      }))
+    );
   }
 
 }

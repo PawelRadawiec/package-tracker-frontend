@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Order } from '../models/order.model';
-import { GetBasketCountRequest } from '../store/basket/baset.actions';
+import { GetBasketByOwnerRequest } from '../store/basket/baset.actions';
 import { BasketState } from '../store/basket/basket.state';
 
 
@@ -15,7 +15,7 @@ export class BasketCountResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Order> {
-        return this.store.dispatch(new GetBasketCountRequest()).pipe(
+        return this.store.dispatch(new GetBasketByOwnerRequest(false)).pipe(
             map(() => this.store.selectSnapshot(BasketState))
         );
     }

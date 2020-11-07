@@ -10,7 +10,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-button>Details</button>
-            <button mat-button>Add to basket</button>
+            <button mat-button (click)="addToBasket(product)">Add to basket</button>
         </mat-card-actions>
     </mat-card>
     <mat-paginator class="paginator-section" [pageSizeOptions]="[4, 8, 16]" showFirstLastButtons></mat-paginator>

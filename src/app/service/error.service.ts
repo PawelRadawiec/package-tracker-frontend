@@ -22,6 +22,7 @@ export class ErrorService implements OnDestroy {
 
   private handleErrorsSubscription(errorsMap: Map<string, string>) {
     this.errorsMap = errorsMap;
+    console.log(this.errorsMap)
     if (!this.form) {
       return;
     }
@@ -39,6 +40,14 @@ export class ErrorService implements OnDestroy {
 
   hasError(field: string): boolean {
     return this.getErrorMessage(field);
+  }
+
+  hasErrorInMap(field: string) {
+    return this.errorsMap && this.errorsMap.has(field);
+  }
+
+  getErrorMapValue(field: string) {
+    return this.hasErrorInMap(field) ? this.errorsMap.get(field) : '';
   }
 
   getErrorMessage(field: string): boolean {

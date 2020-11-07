@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { Basket } from 'src/app/models/basket.model';
 import { BasketService } from 'src/app/service/basket.service';
 import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
-import { GetBasketByOwnerRequest, GetBasketCountRequest, SetBasket, SetBasketCount } from './baset.actions';
+import { SetErrorMap } from '../error/error.actions';
+import {
+    AddProductToBasketRequest,
+    GetBasketByOwnerRequest,
+    GetBasketCountRequest,
+    SetBasket,
+    SetBasketCount
+}
+    from './baset.actions';
 
 
 export interface BasketStateModel {
@@ -25,7 +34,7 @@ export class BasketState {
     constructor(
         private store: Store,
         private basketService: BasketService,
-        private dialogHelper: ModalHelperService 
+        private dialogHelper: ModalHelperService
     ) {
     }
 
@@ -54,9 +63,9 @@ export class BasketState {
     }
 
     @Action(GetBasketByOwnerRequest)
-    getBasketByOwnerRequest() {
+    getBasketByOwnerRequest(state: StateContext<BasketStateModel>, action: GetBasketByOwnerRequest) {
         return this.basketService.getBasketByOwner().pipe(
-            mergeMap(basket => this.store.dispatch(new SetBasket(basket)))
+            mergeMap(basket => this.store.dispatch(new SetBasket(basket, action.openModal)))
         )
     }
 
@@ -66,7 +75,17 @@ export class BasketState {
         state.patchState({
             basket
         })
-        this.dialogHelper.openDialogByCode(DialogCode.BASKET, basket);
+        if (action.openModal) {
+            this.dialogHelper.openDialogByCode(DialogCode.BASKET, basket);
+        }
+    }
+
+    @Action(AddProductToBasketRequest)
+    addProductToBasketRequest(state: StateContext<BasketStateModel>, action: AddProductToBasketRequest) {
+        return this.basketService.addProductToBasket(action.request).pipe(
+            mergeMap(basket => this.store.dispatch(new SetBasket(basket, false))),
+            catchError(reject => of(this.store.dispatch(new SetErrorMap(reject.error, reject))))
+        );
     }
 
 }
