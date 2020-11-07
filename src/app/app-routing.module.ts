@@ -14,6 +14,7 @@ import { SearchProductComponent } from './components/search-product/search-produ
 import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductsResolver } from './resolvers/products.resolver';
 import { BasketCountResolver } from './resolvers/basket-count.resolver';
+import { ProductsOwnerResolver } from './resolvers/products-owner.resolver';
 
 
 const routes: Routes = [
@@ -61,6 +62,12 @@ const routes: Routes = [
     canActivate: [AuthorizationGuard]
   },
   {
+    path: 'products',
+    component: SearchProductComponent,
+    resolve: [ProductsOwnerResolver],
+    canActivate: [AuthorizationGuard]
+  },
+  {
     path: 'login',
     component: LoginComponent
   }
@@ -75,6 +82,7 @@ const routes: Routes = [
     ProductsResolver,
     OrderListResolver,
     BasketCountResolver,
+    ProductsOwnerResolver,
     AuthorizationGuard
   ]
 })

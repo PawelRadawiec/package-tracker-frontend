@@ -6,6 +6,7 @@ import { Basket } from 'src/app/models/basket.model';
 import { ErrorService } from 'src/app/service/error.service';
 import { GetBasketByOwnerRequest } from 'src/app/store/basket/baset.actions';
 import { BasketState } from 'src/app/store/basket/basket.state';
+import { ProductState } from 'src/app/store/product/product.state';
 import { BasketModalComponent } from '../basket-modal/basket-modal.component';
 
 @Component({
@@ -15,8 +16,9 @@ import { BasketModalComponent } from '../basket-modal/basket-modal.component';
   providers: [ErrorService]
 })
 export class SearchProductFormComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
+  private subscriptions: Subscription[] = [];
   basket: Basket;
+  productMode: string;
   productForm: FormGroup;
 
   categories = [
@@ -38,12 +40,15 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initializeSerachForm();
-    this.subscription = this.store.select(BasketState.basket).subscribe(basket => this.basket = basket);
+    this.subscriptions.push(
+      this.store.select(BasketState.basket).subscribe(basket => this.basket = basket),
+      this.store.select(ProductState.productMode).subscribe(productMode => this.productMode = productMode)
+    );
     this.errorService.form = this.productForm;
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(item => item.unsubscribe())
   }
 
   search() {
@@ -51,6 +56,10 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
 
   getBasket() {
     this.store.dispatch(new GetBasketByOwnerRequest(true, BasketModalComponent));
+  }
+
+  get searchMode() {
+    return this.productMode === 'SEARCH'
   }
 
   initializeSerachForm() {

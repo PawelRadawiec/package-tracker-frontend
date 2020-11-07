@@ -16,4 +16,8 @@ export class ProductService {
     return this.http.get<Page>(`${this.baseUrl}/search`);
   }
 
+  ownerProducts() {
+    return this.http.get<Page>(`${this.baseUrl}/products`)
+  }
+
 }
