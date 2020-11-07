@@ -1,5 +1,6 @@
 import { AddToBasketRequest } from 'src/app/models/add-to-basket-request.model';
 import { Basket } from 'src/app/models/basket.model';
+import { Product } from 'src/app/models/product.model';
 
 
 export class GetBasketCountRequest {
@@ -18,7 +19,7 @@ export class SetBasketCount {
 
 export class GetBasketByOwnerRequest {
     static readonly type = '[Basket] GetBasketByOwnerRequest';
-    constructor(public openModal: boolean) {
+    constructor(public openModal: boolean, public compoent?: any) {
 
     }
 }
@@ -27,7 +28,8 @@ export class SetBasket {
     static readonly type = '[Basket] SetBasket';
     constructor(
         public basket: Basket,
-        public openModal: boolean
+        public openModal: boolean,
+        public component?: any
     ) {
     }
 }
@@ -37,4 +39,15 @@ export class AddProductToBasketRequest {
 
     constructor(public request: AddToBasketRequest) {
     }
+}
+
+export class DeleteProductFromBasket {
+    static readonly type = '[Basket] DeleteProductFromBasket';
+
+    constructor(
+        public basketId: number,
+        public product: Product
+    ) {
+    }
+
 }

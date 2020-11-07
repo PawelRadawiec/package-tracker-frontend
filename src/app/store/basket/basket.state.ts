@@ -4,10 +4,11 @@ import { of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { Basket } from 'src/app/models/basket.model';
 import { BasketService } from 'src/app/service/basket.service';
-import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
+import { ModalHelperService } from 'src/app/service/modal-helper.service';
 import { SetErrorMap } from '../error/error.actions';
 import {
     AddProductToBasketRequest,
+    DeleteProductFromBasket,
     GetBasketByOwnerRequest,
     GetBasketCountRequest,
     SetBasket,
@@ -65,7 +66,7 @@ export class BasketState {
     @Action(GetBasketByOwnerRequest)
     getBasketByOwnerRequest(state: StateContext<BasketStateModel>, action: GetBasketByOwnerRequest) {
         return this.basketService.getBasketByOwner().pipe(
-            mergeMap(basket => this.store.dispatch(new SetBasket(basket, action.openModal)))
+            mergeMap(basket => this.store.dispatch(new SetBasket(basket, action.openModal, action.compoent)))
         )
     }
 
@@ -76,7 +77,10 @@ export class BasketState {
             basket
         })
         if (action.openModal) {
-            this.dialogHelper.openDialogByCode(DialogCode.BASKET, basket);
+            const config = {
+                data: { basket }
+            };
+            this.dialogHelper.openDialogByCode(config, action.component);
         }
     }
 
@@ -86,6 +90,14 @@ export class BasketState {
             mergeMap(basket => this.store.dispatch(new SetBasket(basket, false))),
             catchError(reject => of(this.store.dispatch(new SetErrorMap(reject.error, reject))))
         );
+    }
+
+    @Action(DeleteProductFromBasket)
+    deleteProductFromBasket(state: StateContext<BasketStateModel>, action: DeleteProductFromBasket) {
+        return this.basketService.deleteProductFromBasket(action.basketId, action.product).pipe(
+            mergeMap(basket => this.store.dispatch(new SetBasket(basket, false))),
+            catchError(reject => of(this.store.dispatch(new SetErrorMap(reject.error, reject))))
+        )
     }
 
 }

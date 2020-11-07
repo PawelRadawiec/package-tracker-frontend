@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AddToBasketRequest } from '../models/add-to-basket-request.model';
@@ -19,11 +19,19 @@ export class BasketService {
   }
 
   getBasketByOwner() {
-      return this.http.get<Basket>(`${this.baseUrl}/owner`)
+    return this.http.get<Basket>(`${this.baseUrl}/owner`)
   }
 
   addProductToBasket(request: AddToBasketRequest) {
     return this.http.post<Basket>(`${this.baseUrl}/add/product`, request);
+  }
+
+  deleteProductFromBasket(basketId: number, product: Product) {
+    const options = {
+      headers: new HttpHeaders(),
+      body: product
+    }
+    return this.http.delete<Basket>(`${this.baseUrl}/delete/${basketId}/product`, options);
   }
 
 }

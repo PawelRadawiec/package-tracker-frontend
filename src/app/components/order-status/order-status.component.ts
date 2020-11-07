@@ -11,6 +11,7 @@ import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Store } from '@ngxs/store';
 import { GetOrderHistoryRequest } from 'src/app/store/order/order.actions';
+import { OrderHistoryDialogComponent } from '../order-history-dialog/order-history-dialog.component';
 
 
 @Component({
@@ -94,7 +95,7 @@ export class OrderStatusComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openHistory() {
-    this.store.dispatch(new GetOrderHistoryRequest(this.order.id));
+    this.store.dispatch(new GetOrderHistoryRequest(this.order.id, OrderHistoryDialogComponent));
   }
 
   nextStep() {

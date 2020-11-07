@@ -44,7 +44,7 @@ export class OrderRequestFailure {
 export class GetOrderHistoryRequest {
     static readonly type = '[Order] GetOrderHistoryRequest';
 
-    constructor(public orderId: number) {
+    constructor(public orderId: number, public component: any) {
 
     }
 }
@@ -52,7 +52,7 @@ export class GetOrderHistoryRequest {
 export class GetOrderHistoryResponse {
     static readonly type = '[Order] GetOrderHistoryResponse';
 
-    constructor(public orderHistory: OrderHistory[]) {
+    constructor(public orderHistory: OrderHistory[], public component: any) {
 
     }
 }

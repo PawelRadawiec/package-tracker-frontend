@@ -6,6 +6,7 @@ import { Basket } from 'src/app/models/basket.model';
 import { ErrorService } from 'src/app/service/error.service';
 import { GetBasketByOwnerRequest } from 'src/app/store/basket/baset.actions';
 import { BasketState } from 'src/app/store/basket/basket.state';
+import { BasketModalComponent } from '../basket-modal/basket-modal.component';
 
 @Component({
   selector: 'app-search-product-form',
@@ -49,7 +50,7 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
   }
 
   getBasket() {
-    this.store.dispatch(new GetBasketByOwnerRequest(true));
+    this.store.dispatch(new GetBasketByOwnerRequest(true, BasketModalComponent));
   }
 
   initializeSerachForm() {

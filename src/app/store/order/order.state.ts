@@ -12,7 +12,7 @@ import {
     SearchOrderListRequest,
     SearchOrderListResponse
 } from './order.actions';
-import { ModalHelperService, DialogCode } from 'src/app/service/modal-helper.service';
+import { ModalHelperService } from 'src/app/service/modal-helper.service';
 import { Page } from 'src/app/models/page/page.model';
 import { SetErrorMap } from '../error/error.actions';
 import { from } from 'rxjs';
@@ -137,18 +137,21 @@ export class OrderState {
     @Action(GetOrderHistoryRequest)
     getOrderHistoryRequest(state: StateContext<OrderStateModel>, action: GetOrderHistoryRequest) {
         return this.orderService.getOrderHistory(action.orderId).pipe(
-            mergeMap(response => this.store.dispatch(new GetOrderHistoryResponse(response))),
+            mergeMap(response => this.store.dispatch(new GetOrderHistoryResponse(response, action.component))),
             catchError(error => this.store.dispatch(new OrderRequestFailure(error.error)))
         );
     }
 
     @Action(GetOrderHistoryResponse)
     getOrderHistoryResponse(state: StateContext<OrderStateModel>, action: GetOrderHistoryResponse) {
-        const response = action.orderHistory;
+        const orderHistory = action.orderHistory;
         state.patchState({
-            orderHistory: response
+            orderHistory
         });
-        this.dialogHelper.openDialogByCode(DialogCode.ORDER_HISTORY, response);
+        const config = {
+            data: { orderHistory }
+        };
+        this.dialogHelper.openDialogByCode(config, action.component);
     }
 
     @Action(SearchOrderListRequest)
