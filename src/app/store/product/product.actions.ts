@@ -1,15 +1,16 @@
 import { Page } from 'src/app/models/page/page.model';
 
+
 export class GetProductRequest {
     static readonly type = '[Product] GetProductRequest';
 
-    constructor() { }
+    constructor(public pageable: any) { }
 
 }
 
 export class GetOwnerProductsRequest {
     static readonly type = '[Product] GetOwnerProductsRequest';
-    constructor() { }
+    constructor(public pageable: any) { }
 }
 
 export class SetProducts {

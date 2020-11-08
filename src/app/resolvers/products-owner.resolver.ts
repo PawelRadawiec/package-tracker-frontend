@@ -13,7 +13,8 @@ export class ProductsOwnerResolver implements Resolve<any>{
     constructor(private store: Store) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Product[]> {
-        return this.store.dispatch(new GetOwnerProductsRequest()).pipe(
+        const pageable = { page: 0, size: 6 };
+        return this.store.dispatch(new GetOwnerProductsRequest(pageable)).pipe(
             map(() => this.store.selectSnapshot(ProductState))
         );
     }

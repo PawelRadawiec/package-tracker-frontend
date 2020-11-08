@@ -1,11 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Subscription } from 'rxjs';
 import { Basket } from 'src/app/models/basket.model';
+import { Page } from 'src/app/models/page/page.model';
+import { ProductSearchRequest } from 'src/app/models/page/product-search-request.model';
 import { ErrorService } from 'src/app/service/error.service';
 import { GetBasketByOwnerRequest } from 'src/app/store/basket/baset.actions';
 import { BasketState } from 'src/app/store/basket/basket.state';
+import { GetProductRequest } from 'src/app/store/product/product.actions';
 import { ProductState } from 'src/app/store/product/product.state';
 import { BasketModalComponent } from '../basket-modal/basket-modal.component';
 
@@ -16,7 +19,11 @@ import { BasketModalComponent } from '../basket-modal/basket-modal.component';
   providers: [ErrorService]
 })
 export class SearchProductFormComponent implements OnInit, OnDestroy {
+  @Input() searchRequest: ProductSearchRequest;
+
+  private page: Page;
   private subscriptions: Subscription[] = [];
+
   basket: Basket;
   productMode: string;
   productForm: FormGroup;
@@ -41,6 +48,7 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initializeSerachForm();
     this.subscriptions.push(
+      this.store.select(ProductState.page).subscribe(page => this.page = page),
       this.store.select(BasketState.basket).subscribe(basket => this.basket = basket),
       this.store.select(ProductState.productMode).subscribe(productMode => this.productMode = productMode)
     );
@@ -52,6 +60,14 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
   }
 
   search() {
+    const name = this.productForm.get('name').value;
+    const pageable = {
+      size: 6,
+      page: this.page.number,
+      name
+    };
+    this.searchRequest.name = name;
+    this.store.dispatch(new GetProductRequest(pageable));
   }
 
   getBasket() {

@@ -10,12 +10,11 @@ import { ProductState } from '../store/product/product.state';
 @Injectable()
 export class ProductsResolver implements Resolve<any>{
 
-    constructor(private store: Store) {
-        
-    }
+    constructor(private store: Store) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Product[]> {
-        return this.store.dispatch(new GetProductRequest()).pipe(
+        const pageable = { page: 0, size: 6 };
+        return this.store.dispatch(new GetProductRequest(pageable)).pipe(
             map(() => this.store.selectSnapshot(ProductState))
         );
     }

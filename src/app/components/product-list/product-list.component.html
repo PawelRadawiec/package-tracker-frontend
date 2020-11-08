@@ -1,3 +1,4 @@
+<app-search-product-form [searchRequest]="searchRequest"></app-search-product-form>
 <div class="product-list" fxLayout="row wrap" fxLayoutGap="10px">
     <mat-card fxFlex="40" *ngFor="let product of products">
         <mat-card-header>
@@ -13,5 +14,6 @@
             <button mat-button (click)="addToBasket(product)">Add to basket</button>
         </mat-card-actions>
     </mat-card>
-    <mat-paginator class="paginator-section" [pageSizeOptions]="[4, 8, 16]" showFirstLastButtons></mat-paginator>
+    <mat-paginator class="paginator-section" [pageSize]="pagintorOptions?.pageSize" [length]="pagintorOptions?.length"
+        [pageIndex]="pagintorOptions?.pageIndex" (page)="getProducts($event)" showFirstLastButtons></mat-paginator>
 </div>

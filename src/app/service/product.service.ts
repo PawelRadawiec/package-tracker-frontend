@@ -12,12 +12,12 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  products() {
-    return this.http.get<Page>(`${this.baseUrl}/search`);
+  products(pageable) {
+    return this.http.get<Page>(`${this.baseUrl}/search`, { params: pageable });
   }
 
-  ownerProducts() {
-    return this.http.get<Page>(`${this.baseUrl}/products`)
+  ownerProducts(pageable) {
+    return this.http.get<Page>(`${this.baseUrl}/products`, { params: pageable })
   }
 
 }
