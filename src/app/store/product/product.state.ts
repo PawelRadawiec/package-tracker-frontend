@@ -5,6 +5,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { Page } from 'src/app/models/page/page.model';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/service/product.service';
+import { HideSpinner } from '../spinner/spinner.actions';
 import { GetOwnerProductsRequest, GetProductRequest, ProductRequestFailure, SetProducts } from './product.actions';
 
 
@@ -72,7 +73,8 @@ export class ProductState {
         state.patchState({
             page: action.page,
             products: action?.page?.content
-        })
+        });
+        this.store.dispatch(new HideSpinner());
     }
 
 }

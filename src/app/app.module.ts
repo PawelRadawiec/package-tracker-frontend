@@ -48,6 +48,8 @@ import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductState } from './store/product/product.state';
 import { BasketState } from './store/basket/basket.state';
 import { BasketModalComponent } from './components/basket-modal/basket-modal.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SpinnerState } from './store/spinner/spinner.state';
 
 
 
@@ -70,7 +72,8 @@ import { BasketModalComponent } from './components/basket-modal/basket-modal.com
     SearchProductFormComponent,
     ProductListComponent,
     CardMenuComponent,
-    BasketModalComponent
+    BasketModalComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -98,6 +101,7 @@ import { BasketModalComponent } from './components/basket-modal/basket-modal.com
       OrderState,
       BasketState,
       ProductState,
+      SpinnerState,
       SystemUserState,
       AuthorizatonState
     ]),
