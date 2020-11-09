@@ -50,6 +50,7 @@ import { BasketState } from './store/basket/basket.state';
 import { BasketModalComponent } from './components/basket-modal/basket-modal.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerState } from './store/spinner/spinner.state';
+import { errorInterceptorProviders } from './interceptors/error.interceptor';
 
 
 
@@ -110,7 +111,7 @@ import { SpinnerState } from './store/spinner/spinner.state';
     NgxsRouterPluginModule.forRoot(),
 
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, errorInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
