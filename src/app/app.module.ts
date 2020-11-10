@@ -51,6 +51,7 @@ import { BasketModalComponent } from './components/basket-modal/basket-modal.com
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerState } from './store/spinner/spinner.state';
 import { errorInterceptorProviders } from './interceptors/error.interceptor';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 
 
@@ -74,7 +75,8 @@ import { errorInterceptorProviders } from './interceptors/error.interceptor';
     ProductListComponent,
     CardMenuComponent,
     BasketModalComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

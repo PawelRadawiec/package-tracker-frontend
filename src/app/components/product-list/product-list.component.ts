@@ -54,7 +54,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.pagintorOptions.pageIndex = page?.number;
     this.pagintorOptions.pageSize = page?.numberOfElements;
     this.pagintorOptions.length = page?.totalElements;
-
   }
 
   addToBasket(product: Product) {

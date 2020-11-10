@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { GetBasketByOwnerRequest } from '../basket/baset.actions';
-import { GetOwnerProductsRequest, GetProductRequest } from '../product/product.actions';
+import { CreateProductRequest, CreateProductResponse, GetOwnerProductsRequest, GetProductRequest } from '../product/product.actions';
 import { HideSpinner, ShowSpinner } from './spinner.actions';
 
 export const showSpinnerActions = [
     ShowSpinner,
     GetProductRequest,
     GetOwnerProductsRequest,
-    GetBasketByOwnerRequest
+    GetBasketByOwnerRequest,
+    CreateProductRequest
 ];
 
 export const hideSpinnerActions = [
-    HideSpinner
+    HideSpinner,
+    CreateProductResponse
 ];
 
 

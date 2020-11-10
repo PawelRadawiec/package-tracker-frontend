@@ -1,0 +1,42 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="product-form">
+        <div class="form-group">
+            <mat-form-field class="product-input">
+                <mat-label>name</mat-label>
+                <input matInput placeholder="name" formControlName="name">
+                <mat-error *ngIf="errorService.hasError('name')">
+                    {{ errorService.getErrorMessage('name') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-form-field class="product-input">
+                <mat-label>description</mat-label>
+                <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"></textarea>
+                <mat-error *ngIf="errorService.hasError('description')">
+                    {{ errorService.getErrorMessage('description') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <mat-form-field class="search-input">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category">
+                    <mat-option *ngFor="let category of categories" [value]="category.type">
+                        {{category.typeDescription}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+            <div class="button-container">
+                <div class="spinner-container" *ngIf="registerLoading$ | async">
+                    <mat-spinner diameter="24"></mat-spinner>
+                </div>
+                <button mat-raised-button [disabled]="registerLoading$ | async" type="submit"
+                    color="primary">Create</button>
+            </div>
+        </div>
+    </div>
+</form>

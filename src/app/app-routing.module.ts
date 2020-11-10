@@ -15,6 +15,7 @@ import { CardMenuComponent } from './components/card-menu/card-menu.component';
 import { ProductsResolver } from './resolvers/products.resolver';
 import { BasketCountResolver } from './resolvers/basket-count.resolver';
 import { ProductsOwnerResolver } from './resolvers/products-owner.resolver';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 
 const routes: Routes = [
@@ -59,6 +60,11 @@ const routes: Routes = [
     path: 'products/search',
     component: SearchProductComponent,
     resolve: [ProductsResolver, BasketCountResolver],
+    canActivate: [AuthorizationGuard]
+  },
+  {
+    path: 'products/create',
+    component: ProductFormComponent,
     canActivate: [AuthorizationGuard]
   },
   {

@@ -1,4 +1,5 @@
 import { Page } from 'src/app/models/page/page.model';
+import { Product } from 'src/app/models/product.model';
 
 
 export class GetProductRequest {
@@ -18,6 +19,18 @@ export class SetProducts {
 
     constructor(public page: Page) { }
 
+}
+
+export class CreateProductRequest {
+    static readonly type = '[Product] CreateProductRequest'
+
+    constructor(public request: Product) { }
+}
+
+export class CreateProductResponse {
+    static readonly type = '[Product] CreateProductResponse'
+
+    constructor(public response: Product) { }
 }
 
 export class ProductRequestFailure {

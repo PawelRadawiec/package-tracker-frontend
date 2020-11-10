@@ -63,7 +63,7 @@ export class SearchProductFormComponent implements OnInit, OnDestroy {
     console.log('SEARCH: ')
     const name = this.productForm.get('name').value;
     const pageable = {
-      size: 6,
+      size: 4,
       page: this.page.number,
       name
     };

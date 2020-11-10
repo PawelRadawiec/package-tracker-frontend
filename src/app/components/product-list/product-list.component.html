@@ -1,19 +1,27 @@
 <app-search-product-form [searchRequest]="searchRequest"></app-search-product-form>
-<div class="product-list" fxLayout="row wrap" fxLayoutGap="10px">
-    <mat-card fxFlex="40" *ngFor="let product of products">
+<div class="product-list" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <mat-card fxFlex="30" *ngFor="let product of products">
         <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title style="font-size: small;">{{product.name}}</mat-card-title>
             <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            {{product.description}}
+            <mat-form-field>
+                <textarea matInput rows="5" [disabled]="true" placeholder="Description" [value]="product.description"
+                    name="answer"></textarea>
+            </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
             <button mat-button>Details</button>
             <button mat-button (click)="addToBasket(product)">Add to basket</button>
         </mat-card-actions>
     </mat-card>
-    <mat-paginator class="paginator-section" [pageSize]="pagintorOptions?.pageSize" [length]="pagintorOptions?.length"
-        [pageIndex]="pagintorOptions?.pageIndex" (page)="getProducts($event)" showFirstLastButtons></mat-paginator>
+</div>
+<div class="product-list" fxLayout="row wrap">
+    <div fxFlex="row">
+        <mat-paginator class="paginator-section" [pageSize]="pagintorOptions?.pageSize"
+            [length]="pagintorOptions?.length" [pageIndex]="pagintorOptions?.pageIndex" (page)="getProducts($event)"
+            showFirstLastButtons></mat-paginator>
+    </div>
 </div>
