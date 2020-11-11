@@ -7,7 +7,7 @@ import { Page } from 'src/app/models/page/page.model';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/service/product.service';
 import { HideSpinner } from '../spinner/spinner.actions';
-import { CreateProductRequest, CreateProductResponse, GetOwnerProductsRequest, GetProductRequest, ProductRequestFailure, SetProducts } from './product.actions';
+import { BuyProduct, CreateProductRequest, CreateProductResponse, GetOwnerProductsRequest, GetProductRequest, ProductRequestFailure, SetProducts } from './product.actions';
 
 
 export class ProductStateModel {
@@ -15,6 +15,7 @@ export class ProductStateModel {
     product: Product;
     products: Product[];
     productMode: string;
+    productToBuy: Product;
 }
 
 @State<ProductStateModel>({
@@ -23,7 +24,8 @@ export class ProductStateModel {
         page: null,
         product: null,
         products: null,
-        productMode: null
+        productMode: null,
+        productToBuy: null
     }
 })
 @Injectable()
@@ -53,6 +55,11 @@ export class ProductState {
     @Selector()
     static productMode(state: ProductStateModel) {
         return state.productMode;
+    }
+
+    @Selector()
+    static productToBuy(state: ProductStateModel) {
+        return state.productToBuy;
     }
 
     @Action(CreateProductRequest)
@@ -99,6 +106,14 @@ export class ProductState {
             products: action?.page?.content
         });
         this.store.dispatch(new HideSpinner());
+    }
+
+    @Action(BuyProduct)
+    buyProduct(state: StateContext<ProductStateModel>, action: BuyProduct) {
+        state.patchState({
+            productToBuy: action.product
+        });
+        this.store.dispatch(new Navigate(['order']));
     }
 
 }

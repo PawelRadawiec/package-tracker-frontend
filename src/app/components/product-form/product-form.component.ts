@@ -22,6 +22,10 @@ export class ProductFormComponent implements OnInit {
       type: 'PC',
       typeDescription: 'PC'
     },
+    {
+      type: 'HEADPHONE',
+      typeDescription: 'HEADPHONE'
+    }
   ];
 
   constructor(

@@ -12,8 +12,8 @@
         <div class="form-group">
             <mat-form-field class="product-input">
                 <mat-label>description</mat-label>
-                <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"></textarea>
+                <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
                 <mat-error *ngIf="errorService.hasError('description')">
                     {{ errorService.getErrorMessage('description') }}
                 </mat-error>
@@ -31,11 +31,7 @@
         </div>
         <div class="form-group">
             <div class="button-container">
-                <div class="spinner-container" *ngIf="registerLoading$ | async">
-                    <mat-spinner diameter="24"></mat-spinner>
-                </div>
-                <button mat-raised-button [disabled]="registerLoading$ | async" type="submit"
-                    color="primary">Create</button>
+                <button mat-raised-button type="submit" color="primary">Create</button>
             </div>
         </div>
     </div>

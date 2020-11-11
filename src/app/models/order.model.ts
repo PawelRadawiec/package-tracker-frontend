@@ -1,5 +1,6 @@
 import { OrderPerson } from './order-person.model';
 import { OrderAddress } from './order-address.model';
+import { Product } from './product.model';
 
 export class Order {
     id: number;
@@ -12,6 +13,7 @@ export class Order {
     transportType: string;
     person: OrderPerson;
     address: OrderAddress;
+    product: Product;
     orderHistoryList: OrderHistory[];
 
     constructor(props = {}) {

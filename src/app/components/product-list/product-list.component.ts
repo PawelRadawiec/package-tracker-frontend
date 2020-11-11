@@ -22,10 +22,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private basket: Basket;
-  private productMode: string;
   private subscriptions: Subscription[] = [];
 
   page: Page;
+  productMode: string;
   products: Product[] = [];
   pagintorOptions: PaginatorOptions;
   searchRequest: ProductSearchRequest;

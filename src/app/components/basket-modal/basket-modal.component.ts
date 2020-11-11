@@ -6,6 +6,7 @@ import { Basket } from 'src/app/models/basket.model';
 import { Product } from 'src/app/models/product.model';
 import { DeleteProductFromBasket } from 'src/app/store/basket/baset.actions';
 import { BasketState } from 'src/app/store/basket/basket.state';
+import { BuyProduct } from 'src/app/store/product/product.actions';
 
 @Component({
   selector: 'app-basket-modal',
@@ -32,8 +33,13 @@ export class BasketModalComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  buy(product: Product) {
+    this.store.dispatch(new BuyProduct(product));
+    this.close();
+  }
+
   delete(product: Product) {
-      this.store.dispatch(new DeleteProductFromBasket(this.basket.id, product))
+    this.store.dispatch(new DeleteProductFromBasket(this.basket.id, product))
   }
 
   close() {

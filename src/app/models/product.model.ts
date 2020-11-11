@@ -8,6 +8,7 @@ export class Product {
     description: string;
     code: string;
     owner: SystemUser;
+    pictureAddress: string;
     basket: Basket;
     order: Order;
 

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { CreateOrder } from 'src/app/store/order/order.actions';
 import { OrderState } from 'src/app/store/order/order.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ErrorService } from 'src/app/service/error.service';
+import { Order } from 'src/app/models/order.model';
+import { ProductState } from 'src/app/store/product/product.state';
+import { Product } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-order-form',
@@ -12,8 +15,10 @@ import { ErrorService } from 'src/app/service/error.service';
   styleUrls: ['./order-form.component.scss'],
   providers: [ErrorService]
 })
-export class OrderFormComponent implements OnInit {
+export class OrderFormComponent implements OnInit, OnDestroy {
   @Select(OrderState.startLoading) startLoading$: Observable<boolean>;
+  private subscription: Subscription;
+  private productToBuy: Product;
   orderForm: FormGroup;
   orderTypes = [
     {
@@ -45,20 +50,17 @@ export class OrderFormComponent implements OnInit {
   ngOnInit() {
     this.initOrderForm();
     this.errorService.form = this.orderForm;
+    this.subscription = this.store.select(ProductState.productToBuy).subscribe(productToBuy => this.productToBuy = productToBuy);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   initOrderForm() {
     this.orderForm = this.formBuilder.group({
-      name: [''],
-      orderStartDate: [],
-      orderEndDate: [],
       orderType: [''],
       transportType: [''],
-      person: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
-      }),
       address: this.formBuilder.group({
         street: [''],
         city: [''],
@@ -68,7 +70,9 @@ export class OrderFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(new CreateOrder(this.orderForm.value));
+    const order = new Order(this.orderForm.value);
+    order.product = this.productToBuy;
+    this.store.dispatch(new CreateOrder(order));
   }
 
 }

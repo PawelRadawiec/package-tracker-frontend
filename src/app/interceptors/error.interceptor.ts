@@ -17,8 +17,7 @@ export class ErrorInterceptor {
 
     private handleResponse(error) {
         this.store.dispatch(new HideSpinner());
-        console.error(error);
-        return throwError(error.message);
+        return throwError(error);
     }
 }
 

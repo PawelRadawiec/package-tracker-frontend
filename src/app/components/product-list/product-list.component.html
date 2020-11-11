@@ -2,21 +2,20 @@
 <div class="product-list" fxLayout="row wrap" fxLayoutAlign="space-around center">
     <mat-card fxFlex="30" *ngFor="let product of products">
         <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title style="font-size: small;">{{product.name}}</mat-card-title>
             <mat-card-subtitle>{{product.category}}</mat-card-subtitle>
         </mat-card-header>
+        <picture>
+            <img mat-card-image [src]="product.pictureAddress">
+        </picture>
         <mat-card-content>
-            <mat-form-field>
-                <textarea matInput rows="5" [disabled]="true" placeholder="Description" [value]="product.description"
-                    name="answer"></textarea>
-            </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
             <button mat-button>Details</button>
-            <button mat-button (click)="addToBasket(product)">Add to basket</button>
+            <button mat-button (click)="addToBasket(product)" *ngIf="productMode === 'SEARCH'">Add to basket</button>
         </mat-card-actions>
     </mat-card>
+
 </div>
 <div class="product-list" fxLayout="row wrap">
     <div fxFlex="row">

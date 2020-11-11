@@ -33,6 +33,13 @@ export class CreateProductResponse {
     constructor(public response: Product) { }
 }
 
+export class BuyProduct {
+    static readonly type = '[Product] BuyProduct';
+
+    constructor(public product: Product) { }
+
+}
+
 export class ProductRequestFailure {
     static readonly type = '[Product] ProductRequestFailure';
 

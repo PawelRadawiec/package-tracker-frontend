@@ -19,7 +19,8 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell class="name-column" *matHeaderCellDef> Actions </th>
             <mat-cell *matCellDef="let row">
-                <button mat-stroked-button color="primary" (click)="delete(row)">Delete</button>
+                <button mat-stroked-button color="warn" (click)="delete(row)">Delete</button>
+                <button mat-stroked-button color="primary" (click)="buy(row)">Buy</button>
             </mat-cell>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
